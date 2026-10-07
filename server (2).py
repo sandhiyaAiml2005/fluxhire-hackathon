@@ -1,0 +1,462 @@
+#!/usr/bin/env python3
+"""
+FluxHire - Backend API & Static Web Server
+Provides REST endpoints and static file serving with ZERO external dependencies.
+Usage:
+    python server.py [port]
+"""
+
+import http.server
+import socketserver
+import json
+import os
+import sys
+import urllib.parse
+from datetime import datetime
+
+PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 3000
+DIRECTORY = os.path.dirname(os.path.abspath(__file__))
+
+# --- IN-MEMORY DATABASE & DEMO DATA ---
+CREATORS_DATA = [
+    {
+        "id": "aanya-rao",
+        "name": "Aanya Rao",
+        "title": "AI Filmmaker",
+        "avatar": "https://lh3.googleusercontent.com/aida-public/AB6AXuC9Mkoh5rqq2pdNbUUeI5cr63Xox0jvso1TkWbaAkXHQPwznOtQ8MRg7ccQOGb0kax8ypCGm65CRJli262UgeOe4qmHs7ZQaZVvxPpMWoCBNwXNstEL8Jvaa_tirKaAkymRJA9x5plysi8dJZbw1wVFMdLNdUtMHfTmWji3wXZAAjrtnLvJY9q_mQT68NtXSmSQFD-ccBEWFyv-aw55itiolBSnRqSU4ZDualKaVsY",
+        "headerMedia": "https://lh3.googleusercontent.com/aida-public/AB6AXuBR9AkH5s1WTM78Vq4EeHQu4TbfVhx93ML9UwbM5wZijsxT4ffaYld6eleajo6cbzet-TQ4SmMfuvNy0PArHLm_n9K-GedOm7yMR5MWGldpSVf51hrqu0wE1FazOqOXJeogFOODMVYd5YWkeyJnqe8fy0DNFG3sEAbjC_VXgUF9wS6P3y4r3D7Hsj3rVVWa0oxTckC9MV9Ct9eLD8_6KvepDrzG7LeccJ6PsarVz0o",
+        "mediaLabel": "Commercial Reel (0:45s)",
+        "rating": 4.9,
+        "jobsCount": 38,
+        "ratePerHour": 120,
+        "startingPrice": 600,
+        "location": "Mumbai / Remote",
+        "verified": True,
+        "verificationDetails": {
+            "portfolioOwnership": "Confirmed (Original generation seeds & keyframe timelines verified)",
+            "toolUsage": "Verified (Runway Gen-3 and Kling 1.5 multi-model benchmark passed)",
+            "commercialLicensing": "Documented (Full commercial IP transfer and release clearance guarantee)"
+        },
+        "specialization": "AI Filmmaking",
+        "tools": ["Runway Gen-3", "Kling", "Midjourney", "ElevenLabs"],
+        "formats": ["Video", "Social Ads", "Animation"],
+        "skills": ["AI Filmmaking", "Cinematic Lighting", "Product Advertising", "Image-to-Video", "Color Grading"],
+        "bio": "Visionary AI commercial director with 6+ years in traditional post-production now directing photorealistic generative video for top luxury, beauty, and automotive brands.",
+        "availability": "Available for Q4 Campaigns",
+        "matchScore": 98,
+        "matchReason": "Strong match because this creator specializes in AI filmmaking, has proven Runway Gen-3 and Kling production pipelines, and has completed 14 verified commercial skincare brand campaigns.",
+        "telemetry": {
+            "aestheticMatch": 99,
+            "pipelineFit": 100,
+            "commercialAudit": 96
+        }
+    },
+    {
+        "id": "vikram-shah",
+        "name": "Vikram Shah",
+        "title": "Generative Designer",
+        "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=256&h=256&q=80",
+        "headerMedia": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
+        "mediaLabel": "Packaging Design (Brand Identity)",
+        "rating": 4.9,
+        "jobsCount": 45,
+        "ratePerHour": 95,
+        "startingPrice": 450,
+        "location": "Bangalore / Remote",
+        "verified": True,
+        "verificationDetails": {
+            "portfolioOwnership": "Confirmed (Vector and prompt lineage verified)",
+            "toolUsage": "Verified (Midjourney v6 & Adobe Firefly commercial licensing audit passed)",
+            "commercialLicensing": "Documented (Full IP rights transfer with indemnification)"
+        },
+        "specialization": "Generative Design",
+        "tools": ["Midjourney", "Adobe Firefly", "FLUX"],
+        "formats": ["Image", "Social Ads", "3D"],
+        "skills": ["Generative Design", "Brand Identity", "Packaging Design", "Custom LoRA", "Vectorization"],
+        "bio": "Pioneering brand identity and generative tactile packaging. Blends Midjourney v6 with custom FLUX LoRAs for enterprise physical and digital products.",
+        "availability": "Available Immediately",
+        "matchScore": 88,
+        "matchReason": "High aesthetic synergy for still imagery and print/packaging components, with certified commercial IP indemnity.",
+        "telemetry": {
+            "aestheticMatch": 94,
+            "pipelineFit": 84,
+            "commercialAudit": 96
+        }
+    },
+    {
+        "id": "maya-chen",
+        "name": "Maya Chen",
+        "title": "AI Animator",
+        "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&h=256&q=80",
+        "headerMedia": "https://images.unsplash.com/photo-1633167606207-d840b5070fc2?auto=format&fit=crop&w=800&q=80",
+        "mediaLabel": "Character Reel (0:30s)",
+        "rating": 5.0,
+        "jobsCount": 29,
+        "ratePerHour": 135,
+        "startingPrice": 750,
+        "location": "Singapore / Remote",
+        "verified": True,
+        "verificationDetails": {
+            "portfolioOwnership": "Confirmed (ComfyUI workflow nodes and custom seed checkpoints checked)",
+            "toolUsage": "Verified (Runway Gen-3 and ComfyUI AnimateDiff pipelines benchmarked)",
+            "commercialLicensing": "Documented (Enterprise commercial terms verified)"
+        },
+        "specialization": "AI Animation",
+        "tools": ["Runway Gen-3", "Stable Diffusion", "ComfyUI"],
+        "formats": ["Animation", "Video"],
+        "skills": ["AI Animation", "ComfyUI Nodes", "Motion Control", "Character Consistency", "Post-Processing"],
+        "bio": "Ex-Pixar technical artist specializing in high-consistency AI animation, node-based ComfyUI rigs, and cinematic temporal smoothing.",
+        "availability": "Booking for November",
+        "matchScore": 91,
+        "matchReason": "Exceptional motion fluidity and camera movement accuracy, ideal for complex animated camera movements and fluid simulations.",
+        "telemetry": {
+            "aestheticMatch": 92,
+            "pipelineFit": 95,
+            "commercialAudit": 90
+        }
+    },
+    {
+        "id": "arjun-menon",
+        "name": "Arjun Menon",
+        "title": "Product Ads Creator",
+        "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=256&h=256&q=80",
+        "headerMedia": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80",
+        "mediaLabel": "Product Spot (0:20s 9:16)",
+        "rating": 4.8,
+        "jobsCount": 52,
+        "ratePerHour": 110,
+        "startingPrice": 500,
+        "location": "New Delhi / Remote",
+        "verified": True,
+        "verificationDetails": {
+            "portfolioOwnership": "Confirmed (Live project files & ad metrics verified)",
+            "toolUsage": "Verified (Kling and Midjourney enterprise ad pipelines passed)",
+            "commercialLicensing": "Documented (Full advertising rights buyout included)"
+        },
+        "specialization": "Product Advertising",
+        "tools": ["Kling", "Midjourney", "Adobe Firefly", "Runway Gen-3"],
+        "formats": ["Social Ads", "Video", "Image"],
+        "skills": ["Product Advertising", "9:16 Social Ads", "Hook Rate Optimization", "Lighting Match", "CTA Motion"],
+        "bio": "DTC ad specialist with over 50 completed commercial campaigns. Translates product 3D CAD/photos into viral high-converting vertical video ads.",
+        "availability": "Available This Week",
+        "matchScore": 95,
+        "matchReason": "Strong match with 95% compatibility due to deep product advertising focus, 9:16 vertical video mastery, and Kling ad workflows.",
+        "telemetry": {
+            "aestheticMatch": 95,
+            "pipelineFit": 94,
+            "commercialAudit": 98
+        }
+    },
+    {
+        "id": "zoya-khan",
+        "name": "Zoya Khan",
+        "title": "AI Art Director",
+        "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=256&h=256&q=80",
+        "headerMedia": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+        "mediaLabel": "Architectural Vision (Moodboard)",
+        "rating": 4.7,
+        "jobsCount": 19,
+        "ratePerHour": 105,
+        "startingPrice": 550,
+        "location": "Dubai / Remote",
+        "verified": False,
+        "verificationDetails": {
+            "toolUsage": "Tool usage self-declared (Independent portfolio verification pending)"
+        },
+        "specialization": "AI Art Direction",
+        "tools": ["Midjourney", "ComfyUI", "FLUX"],
+        "formats": ["Image", "Generative Design", "3D"],
+        "skills": ["AI Art Direction", "Editorial Direction", "Speculative Architecture", "Latent Control", "Moodboards"],
+        "bio": "Experimental art director crafting speculative architecture, surreal fashion moodboards, and multi-model latent explorations.",
+        "availability": "Available Part-time",
+        "matchScore": 84,
+        "matchReason": "Bold artistic direction and luxury moodboard expertise; self-declared tool proficiency pending platform audit.",
+        "telemetry": {
+            "aestheticMatch": 92,
+            "pipelineFit": 80,
+            "commercialAudit": 78
+        }
+    },
+    {
+        "id": "rohan-iyer",
+        "name": "Rohan Iyer",
+        "title": "AI Video Specialist",
+        "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=256&h=256&q=80",
+        "headerMedia": "https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=800&q=80",
+        "mediaLabel": "Cinematic Cut (0:30s)",
+        "rating": 4.9,
+        "jobsCount": 31,
+        "ratePerHour": 125,
+        "startingPrice": 650,
+        "location": "Bengaluru / Remote",
+        "verified": True,
+        "verificationDetails": {
+            "portfolioOwnership": "Confirmed (Original seed generation and timeline stems verified)",
+            "toolUsage": "Verified (Runway Gen-3 and Kling video synthesis workflows benchmarked)",
+            "commercialLicensing": "Documented (Full commercial release clearance provided)"
+        },
+        "specialization": "AI Filmmaking",
+        "tools": ["Runway Gen-3", "Kling", "Stable Diffusion"],
+        "formats": ["Video", "Social Ads", "Animation"],
+        "skills": ["AI Filmmaking", "Camera Motion", "Video Inpainting", "Sound Design", "Frame Interpolation"],
+        "bio": "Commercial director combining camera tracking, generative video models, and cinematic audio mastering for broadcast and streaming.",
+        "availability": "Available Next Week",
+        "matchScore": 92,
+        "matchReason": "High 92% match with verified Runway Gen-3 and Kling workflows, specializing in cinematic camera motion and commercial polish.",
+        "telemetry": {
+            "aestheticMatch": 94,
+            "pipelineFit": 95,
+            "commercialAudit": 90
+        }
+    },
+    {
+        "id": "marcus-chen",
+        "name": "Marcus Chen",
+        "title": "3D Generative Artist",
+        "avatar": "https://lh3.googleusercontent.com/aida-public/AB6AXuATjDcgJi13gmk9zzf2ZfwaJxSnX0NcXCB1gQOhgePgAq5MFXwwCpLKse4ckMfMwwcIzZjwemCkkF8498uH8G99w_Fw-q7ePsqxDR0XzsduigARRHcZGdJ8nYpfNOAkMEeAUQSPWBeohLVJHMNjBm6_FKpHcHI-sK2Rw927v4xQUNdHBN2o4653vF7097r9tG_ne5gsqLRJEW_jl79CAhPyqksEM1MWXf36J-utHEg",
+        "headerMedia": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80",
+        "mediaLabel": "Volumetric 3D Asset (Turnaround)",
+        "rating": 4.9,
+        "jobsCount": 24,
+        "ratePerHour": 140,
+        "startingPrice": 850,
+        "location": "Vancouver / Remote",
+        "verified": True,
+        "verificationDetails": {
+            "portfolioOwnership": "Confirmed (Blender scenes & ComfyUI mesh pipelines verified)",
+            "toolUsage": "Verified (ComfyUI and FLUX 3D procedural workflows passed)",
+            "commercialLicensing": "Documented (Full geometry and texture IP transfer included)"
+        },
+        "specialization": "Generative Design",
+        "tools": ["ComfyUI", "Stable Diffusion", "FLUX"],
+        "formats": ["3D", "Image", "Animation"],
+        "skills": ["3D Meshes", "Procedural Shaders", "Volumetric Renders", "ComfyUI", "Fintech Branding"],
+        "bio": "3D procedural artist generating volumetric models, CGI environments, and currently engaged on our active Fintech App 3D Visual Assets project.",
+        "availability": "Contracted (Milestone 2 In Review)",
+        "matchScore": 86,
+        "matchReason": "Specialized in 3D generative assets and refractive glass models; currently delivering Milestone 2 on active Fintech project.",
+        "telemetry": {
+            "aestheticMatch": 88,
+            "pipelineFit": 94,
+            "commercialAudit": 89
+        }
+    },
+    {
+        "id": "elena-rostova",
+        "name": "Elena Rostova",
+        "title": "Social Ads Specialist",
+        "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=256&h=256&q=80",
+        "headerMedia": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80",
+        "mediaLabel": "Viral Lookbook (9:16 Social Ads)",
+        "rating": 4.8,
+        "jobsCount": 41,
+        "ratePerHour": 90,
+        "startingPrice": 400,
+        "location": "London / Remote",
+        "verified": False,
+        "verificationDetails": {
+            "toolUsage": "Tool usage self-declared (Independent portfolio verification pending)"
+        },
+        "specialization": "Product Advertising",
+        "tools": ["FLUX", "Midjourney", "Kling"],
+        "formats": ["Social Ads", "Video", "Image"],
+        "skills": ["Product Advertising", "TikTok Ads", "Hook Rate Optimization", "Fast Revisions", "Viral Pacing"],
+        "bio": "Rapid-fire visual storyteller producing dynamic 9:16 social ads for Instagram Reels and TikTok e-commerce brands.",
+        "availability": "Available for Quick Turnarounds",
+        "matchScore": 89,
+        "matchReason": "Proven track record in high-converting 9:16 social video with rapid turnaround, self-declared tool expertise.",
+        "telemetry": {
+            "aestheticMatch": 90,
+            "pipelineFit": 86,
+            "commercialAudit": 92
+        }
+    }
+]
+
+BRIEFS_STORE = [
+    {
+        "id": "brief-skincare-1",
+        "name": "Luxury Skincare Campaign",
+        "status": "Finding Creators",
+        "contentType": "AI Video • 20s",
+        "platform": "Instagram (9:16)",
+        "format": "9:16",
+        "style": "Luxury / Cinematic / Minimal",
+        "deadline": "Oct 20",
+        "budget": "$500 – $1,000",
+        "matchingCreatorsCount": 18,
+        "createdAt": "2026-10-02",
+        "promptText": "I need a 20-second premium skincare advertisement for Instagram with cinematic visuals, soft morning lighting and a luxury feel.",
+        "requiredSkills": ["AI Filmmaking", "Product Advertising", "Image-to-Video", "Motion Design"],
+        "suggestedTools": ["Runway Gen-3", "Kling", "Midjourney"],
+        "commercialUse": "Paid social + website (full commercial rights buyout)",
+        "invitedCreatorIds": []
+    }
+]
+
+INVITATIONS_STORE = []
+
+
+class FluxHireRequestHandler(http.server.SimpleHTTPRequestHandler):
+    """Custom HTTP Request Handler serving static frontend assets and REST API endpoints."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, directory=DIRECTORY, **kwargs)
+
+    def do_GET(self):
+        parsed = urllib.parse.urlparse(self.path)
+        path = parsed.path
+
+        # Health endpoint
+        if path == "/api/health":
+            self.send_json_response({"status": "healthy", "service": "FluxHire API", "version": "1.0.0"})
+            return
+
+        # Get Creators
+        if path == "/api/creators":
+            query = urllib.parse.parse_qs(parsed.query)
+            filtered = list(CREATORS_DATA)
+
+            if "specialization" in query:
+                spec = query["specialization"][0]
+                if spec != "All":
+                    filtered = [c for c in filtered if c["specialization"] == spec]
+
+            if "tool" in query:
+                tool = query["tool"][0]
+                if tool != "All":
+                    filtered = [c for c in filtered if tool in c["tools"]]
+
+            if "search" in query:
+                q = query["search"][0].lower()
+                filtered = [
+                    c for c in filtered
+                    if q in c["name"].lower()
+                    or q in c["specialization"].lower()
+                    or any(q in t.lower() for t in c["tools"])
+                    or any(q in s.lower() for s in c["skills"])
+                ]
+
+            self.send_json_response(filtered)
+            return
+
+        # Get Single Creator
+        if path.startswith("/api/creators/"):
+            creator_id = path.replace("/api/creators/", "")
+            creator = next((c for c in CREATORS_DATA if c["id"] == creator_id), None)
+            if creator:
+                self.send_json_response(creator)
+            else:
+                self.send_json_response({"error": "Creator not found"}, status=404)
+            return
+
+        # Get Briefs
+        if path == "/api/briefs":
+            self.send_json_response(BRIEFS_STORE)
+            return
+
+        # Fallback to static files
+        super().do_GET()
+
+    def do_POST(self):
+        parsed = urllib.parse.urlparse(self.path)
+        path = parsed.path
+        length = int(self.headers.get("Content-Length", 0))
+        body = self.rfile.read(length).decode("utf-8") if length > 0 else "{}"
+        try:
+            data = json.loads(body)
+        except Exception:
+            data = {}
+
+        # AI Brief Generation Endpoint
+        if path == "/api/generate-brief":
+            prompt = data.get("prompt", "").lower()
+            
+            if "skincare" in prompt or "cosmetics" in prompt or "luxury" in prompt:
+                name = "Velvet Aura — Premium Skincare Campaign"
+                content_type = "AI Video • 20s"
+                platform = "Instagram (9:16)"
+                budget = "$500 – $1,000"
+                style = "Luxury / Cinematic / Minimal"
+                skills = ["AI Filmmaking", "Product Advertising", "Image-to-Video", "Motion Design"]
+                tools = ["Runway Gen-3", "Kling", "Midjourney"]
+            elif "3d" in prompt or "fintech" in prompt or "crystal" in prompt:
+                name = "NeoVanguard — Fintech 3D Asset System"
+                content_type = "3D Asset Renders & Turnaround"
+                platform = "Web & Mobile App"
+                budget = "$850 – $1,500"
+                style = "Prismatic / High-Tech / Glassmorphism"
+                skills = ["3D Meshes", "Procedural Shaders", "Volumetric Modeling"]
+                tools = ["ComfyUI", "FLUX", "Blender"]
+            else:
+                name = "HyperStreet — Urban Social Campaign"
+                content_type = "Social Ad Reel • 15s"
+                platform = "TikTok & Reels (9:16)"
+                budget = "$600 – $1,200"
+                style = "Cyber-Surreal / Neon / Gritty"
+                skills = ["Social Ads", "Character Consistency", "Fast Pacing"]
+                tools = ["FLUX", "Midjourney", "Kling"]
+
+            brief = {
+                "id": f"brief-{int(datetime.now().timestamp())}",
+                "name": name,
+                "status": "Finding Creators",
+                "contentType": content_type,
+                "platform": platform,
+                "format": "9:16",
+                "style": style,
+                "deadline": "14 days",
+                "budget": budget,
+                "matchingCreatorsCount": 18,
+                "createdAt": datetime.now().strftime("%Y-%m-%d"),
+                "promptText": data.get("prompt", ""),
+                "requiredSkills": skills,
+                "suggestedTools": tools,
+                "commercialUse": "Paid social + website (full commercial rights transfer)",
+                "matchPrecision": "99.4%"
+            }
+            BRIEFS_STORE.insert(0, brief)
+            self.send_json_response(brief, status=201)
+            return
+
+        # Invite Creator Endpoint
+        if path == "/api/invite":
+            invite = {
+                "creatorId": data.get("creatorId"),
+                "briefId": data.get("briefId"),
+                "message": data.get("message"),
+                "sentAt": datetime.now().isoformat()
+            }
+            INVITATIONS_STORE.append(invite)
+            self.send_json_response({"success": True, "invitation": invite}, status=201)
+            return
+
+        self.send_json_response({"error": "Endpoint not found"}, status=404)
+
+    def send_json_response(self, data, status=200):
+        response_bytes = json.dumps(data, indent=2).encode("utf-8")
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(response_bytes)))
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.end_headers()
+        self.wfile.write(response_bytes)
+
+
+def run_server():
+    socketserver.TCPServer.allow_reuse_address = True
+    with socketserver.TCPServer(("", PORT), FluxHireRequestHandler) as httpd:
+        print("=" * 60)
+        print(f"🚀 FluxHire AI Marketplace Server running at http://localhost:{PORT}")
+        print(f"📂 Serving directory: {DIRECTORY}")
+        print("⚡ Press Ctrl+C to stop the server.")
+        print("=" * 60)
+        try:
+            httpd.serve_forever()
+        except KeyboardInterrupt:
+            print("\nShutting down server gracefully...")
+            httpd.shutdown()
+
+
+if __name__ == "__main__":
+    run_server()
