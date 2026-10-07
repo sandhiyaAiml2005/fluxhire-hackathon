@@ -35,3 +35,24 @@ cd fluxhire-ai-marketplace
 
 # Start the unified backend and frontend server
 python server.py 3000
+Open http://localhost:3000 in your browser.
+
+Option 2: Any Static Web Server
+bash
+# Using Node / NPX
+npx serve -l 3000 .
+Option 3: Direct File Execution
+Double-click index.html to run directly in Google Chrome, Microsoft Edge, or Mozilla Firefox.
+
+🎬 8-Step Hackathon Demo Walkthrough (For Judges)
+The application provides a seamless, interconnected user journey that runs entirely client-side without page refreshes:
+
+mermaid
+graph LR
+    A[Discover Marketplace] --> B[AI Brief Builder]
+    B --> C[Generate Structured Brief]
+    C --> D[View AI Matches & Telemetry]
+    D --> E[Inspect Creator Profile]
+    E --> F[Shortlist Talent]
+    F --> G[Send Proposal Invitation]
+    G --> H[Track in My Briefs Dashboard]
