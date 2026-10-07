@@ -1,0 +1,731 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>FluxHire - All-in-One Platform Hub</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Google Fonts: Inter & Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-error": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "secondary-fixed-dim": "#7bd0ff",
+            "on-surface-variant": "#464554",
+            "surface-bright": "#faf8ff",
+            "secondary": "#00668a",
+            "on-background": "#131b2e",
+            "inverse-surface": "#283044",
+            "primary-fixed-dim": "#c0c1ff",
+            "surface": "#faf8ff",
+            "on-tertiary": "#ffffff",
+            "primary-fixed": "#e1e0ff",
+            "surface-variant": "#dae2fd",
+            "surface-tint": "#494bd6",
+            "error": "#ba1a1a",
+            "secondary-fixed": "#c4e7ff",
+            "primary-container": "#6063ee",
+            "outline": "#767586",
+            "background": "#faf8ff",
+            "on-secondary-container": "#004d6a",
+            "tertiary": "#006c49",
+            "primary": "#4648d4",
+            "surface-container-high": "#e2e7ff",
+            "on-error-container": "#93000a",
+            "tertiary-fixed": "#6ffbbe",
+            "on-secondary-fixed": "#001e2c",
+            "secondary-container": "#40c2fd",
+            "outline-variant": "#c7c4d7",
+            "surface-dim": "#d2d9f4",
+            "inverse-on-surface": "#eef0ff",
+            "on-tertiary-container": "#000703",
+            "on-surface": "#131b2e",
+            "on-tertiary-fixed-variant": "#005236",
+            "surface-container-highest": "#dae2fd",
+            "on-primary-fixed-variant": "#2f2ebe",
+            "on-primary": "#ffffff",
+            "on-tertiary-fixed": "#002113",
+            "inverse-primary": "#c0c1ff",
+            "error-container": "#ffdad6",
+            "tertiary-container": "#00885d",
+            "surface-container-low": "#f2f3ff",
+            "on-secondary-fixed-variant": "#004c69",
+            "on-primary-fixed": "#07006c",
+            "surface-container": "#eaedff",
+            "tertiary-fixed-dim": "#4edea3",
+            "on-secondary": "#ffffff",
+            "on-primary-container": "#fffbff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "3xl": "1.5rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter": "1.5rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2.5rem",
+            "space-md": "1rem",
+            "gutter-mobile": "1rem",
+            "margin": "2rem",
+            "space-sm": "0.5rem",
+            "margin-mobile": "1rem",
+            "space-xs": "0.25rem"
+          },
+          "fontFamily": {
+            "body-lg": ["Inter"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "label-sm": ["Inter"],
+            "display": ["Plus Jakarta Sans"],
+            "display-mobile": ["Plus Jakarta Sans"],
+            "body-md": ["Inter"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "title-md": ["Inter"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "label-md": ["Inter"]
+          },
+          "fontSize": {
+            "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+            "headline-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.025em", "fontWeight": "700"}],
+            "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600"}],
+            "display": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.03em", "fontWeight": "800"}],
+            "display-mobile": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.025em", "fontWeight": "800"}],
+            "body-md": ["15px", {"lineHeight": "22px", "letterSpacing": "-0.005em", "fontWeight": "400"}],
+            "headline-sm": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+            "body-sm": ["13px", {"lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400"}],
+            "title-md": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "headline-md": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "headline-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      display: none;
+    }
+    .custom-scroll {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased selection:bg-primary selection:text-white min-h-screen pb-24">
+<!-- TopAppBar: Shared Component execution -->
+<header class="bg-surface/90 backdrop-blur-md sticky top-0 z-50 flex items-center justify-between w-full px-4 h-16 max-w-7xl mx-auto shadow-sm">
+<!-- Leading Avatar & Brand Info -->
+<div class="flex items-center gap-3">
+<div class="relative w-9 h-9 rounded-full ring-2 ring-primary/20 overflow-hidden flex-shrink-0 bg-surface-container-high">
+<img class="w-full h-full object-cover" data-alt="Close up photographic headshot portrait of a professional modern creative director in high key studio lighting with soft indigo reflections and clean minimalist background aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCILi4lnMJJOEHOp_iHlEgTqxvm5mdHJYQYFsKpkanZ8Jv13KxEOX2tW7u4QyrmZOxvA4p4xHCyTXTsQ8kGq0527kuSHtj63mOJu2FAIbd00ZOoB077fhVRHbXdHbYPifBYQTFIXa_ZQ96g7tOmCo-ST9OQeJyY4Wmh32ck0uvqUx0d9BQF_6-nPj77QG4zTwXgs8lq9Rqieg0dnjob9sdbzpvPhyd4rQjWp1OxHwc">
+</div>
+<div>
+<div class="flex items-center gap-1.5">
+<span class="text-headline-sm font-headline-sm font-extrabold text-primary tracking-tight">FluxHire</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+</div>
+<p class="text-label-sm font-label-sm text-on-surface-variant font-medium -mt-0.5">AI Creator Marketplace</p>
+</div>
+</div>
+<!-- Trailing Action & Notifications -->
+<div class="flex items-center gap-2">
+<button aria-label="Notifications" class="relative p-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors duration-150 active:scale-95">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface"></span>
+</button>
+<button class="flex items-center gap-1.5 bg-gradient-to-r from-primary to-primary-container text-on-primary px-3.5 py-1.5 rounded-lg text-label-md font-label-md shadow-sm hover:opacity-95 transition-all active:scale-95">
+<span class="material-symbols-outlined text-[16px]" data-icon="add">add</span>
+<span class="">Post Brief</span>
+</button>
+</div>
+</header>
+<!-- Main Container -->
+<main class="max-w-md mx-auto px-4 pt-4 space-y-6">
+<!-- Hero & Executive Stats Section -->
+<section class="space-y-4">
+<div class="bg-gradient-to-br from-surface-container-lowest via-surface-container-low to-surface-variant/30 rounded-2xl p-5 border border-outline-variant/30 shadow-sm relative overflow-hidden">
+<div class="absolute -right-10 -top-10 w-36 h-36 bg-primary-fixed-dim/20 rounded-full blur-2xl pointer-events-none"></div>
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-label-sm font-label-sm uppercase tracking-wider mb-2">
+<span class="material-symbols-outlined text-[14px]" data-icon="auto_awesome">auto_awesome</span>
+<span class="">AI-NATIVE CREATOR DISCOVERY &amp; PIPELINE</span>
+</div>
+<h1 class="text-headline-lg-mobile font-headline-lg-mobile text-on-surface font-bold tracking-tight">
+          Intelligent Creator Ecosystem
+        </h1>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1">
+          Bridge multi-model generative workflows with enterprise creative briefs seamlessly.
+        </p>
+<!-- Executive Stat Tiles Grid -->
+<div class="grid grid-cols-2 gap-2.5 mt-4">
+<div class="bg-surface-container-lowest p-3 rounded-xl border border-outline-variant/30 shadow-sm">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="text-label-sm font-label-sm font-medium">AI Creators</span>
+<span class="material-symbols-outlined text-primary text-[18px]" data-icon="groups">groups</span>
+</div>
+<div class="text-headline-sm font-headline-sm font-bold text-on-surface mt-1">1,248</div>
+<span class="text-label-sm font-label-sm text-tertiary font-semibold flex items-center gap-0.5 mt-0.5">
+<span class="material-symbols-outlined text-[12px]" data-icon="trending_up">trending_up</span> +34 this week
+            </span>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-xl border border-outline-variant/30 shadow-sm">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="text-label-sm font-label-sm font-medium">Verified</span>
+<span class="material-symbols-outlined text-secondary text-[18px]" data-icon="verified">verified</span>
+</div>
+<div class="text-headline-sm font-headline-sm font-bold text-on-surface mt-1">94%</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant mt-0.5">Tooling &amp; IP audit</span>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-xl border border-outline-variant/30 shadow-sm">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="text-label-sm font-label-sm font-medium">Avg Rating</span>
+<span class="material-symbols-outlined text-amber-500 text-[18px]" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<div class="text-headline-sm font-headline-sm font-bold text-on-surface mt-1">4.9★</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant mt-0.5">From 3,400+ jobs</span>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-xl border border-outline-variant/30 shadow-sm">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="text-label-sm font-label-sm font-medium">Speedup</span>
+<span class="material-symbols-outlined text-primary-container text-[18px]" data-icon="bolt">bolt</span>
+</div>
+<div class="text-headline-sm font-headline-sm font-bold text-primary mt-1">10x</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant mt-0.5">Faster discovery</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Module 1: Creator Discovery & Interactive Filters -->
+<section class="space-y-3">
+<div class="flex items-center justify-between">
+<h2 class="text-title-md font-title-md font-bold text-on-surface flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary" data-icon="explore">explore</span>
+          Creator Discovery
+        </h2>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-tertiary/10 text-tertiary text-label-sm font-label-sm font-semibold border border-tertiary/20">
+          42 Creators Found
+        </span>
+</div>
+<!-- Search Bar -->
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3.5 top-3 text-outline" data-icon="search">search</span>
+<input class="w-full h-11 pl-10 pr-10 rounded-xl bg-surface-container-lowest border border-outline-variant/40 text-body-sm font-body-sm placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Search creators, styles, or AI tools..." type="text">
+<button class="absolute right-3 top-2.5 text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined" data-icon="tune">tune</span>
+</button>
+</div>
+<!-- Interactive Dropdown & Filter Pills -->
+<div class="flex items-center gap-2 overflow-x-auto pb-1 custom-scroll">
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-surface-container-lowest border border-outline-variant/40 text-label-md font-label-md text-on-surface whitespace-nowrap shadow-sm hover:border-primary">
+<span class="">AI Tools (All)</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="expand_more">expand_more</span>
+</button>
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-surface-container-lowest border border-outline-variant/40 text-label-md font-label-md text-on-surface whitespace-nowrap shadow-sm hover:border-primary">
+<span class="">Specialization</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="expand_more">expand_more</span>
+</button>
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-surface-container-lowest border border-outline-variant/40 text-label-md font-label-md text-on-surface whitespace-nowrap shadow-sm hover:border-primary">
+<span class="">Skills</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="expand_more">expand_more</span>
+</button>
+</div>
+<!-- Active Filter Chips -->
+<div class="flex items-center gap-2 flex-wrap">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-primary/10 border border-primary/25 text-primary text-label-sm font-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+          Runway
+          <span class="material-symbols-outlined text-[14px] cursor-pointer" data-icon="close">close</span>
+</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-primary/10 border border-primary/25 text-primary text-label-sm font-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+          AI Filmmaking
+          <span class="material-symbols-outlined text-[14px] cursor-pointer" data-icon="close">close</span>
+</span>
+</div>
+<!-- Creator Card Preview: Aanya Rao -->
+<div class="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 p-4 shadow-sm space-y-3 relative overflow-hidden hover:border-primary/40 transition-colors">
+<!-- Visual Media Header -->
+<div class="relative w-full h-36 rounded-xl overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="High quality hyperrealistic cinematic frames featuring glowing neon liquid skincare bottle and elegant holographic visual effects generated by artificial intelligence model with cinematic lighting and soft studio depth of field." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBR9AkH5s1WTM78Vq4EeHQu4TbfVhx93ML9UwbM5wZijsxT4ffaYld6eleajo6cbzet-TQ4SmMfuvNy0PArHLm_n9K-GedOm7yMR5MWGldpSVf51hrqu0wE1FazOqOXJeogFOODMVYd5YWkeyJnqe8fy0DNFG3sEAbjC_VXgUF9wS6P3y4r3D7Hsj3rVVWa0oxTckC9MV9Ct9eLD8_6KvepDrzG7LeccJ6PsarVz0o">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+<!-- Top Floating Match Badge -->
+<div class="absolute top-2.5 right-2.5 flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-md border border-emerald-400/40 shadow-sm text-tertiary">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+<span class="text-label-sm font-label-sm font-bold text-tertiary">98% Match</span>
+</div>
+<div class="absolute bottom-2.5 left-2.5 text-white flex items-center gap-1.5 text-label-sm font-label-sm font-medium">
+<span class="material-symbols-outlined text-[16px] text-white" data-icon="play_circle">play_circle</span>
+<span class="">Commercial Reel (0:45s)</span>
+</div>
+</div>
+<!-- Creator Profile & Metadata -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="relative w-12 h-12 rounded-full ring-2 ring-primary/30 overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Close up portrait photograph of female visionary AI director Aanya Rao smiling confidently against high contrast bright studio backdrop with subtle purple digital highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9Mkoh5rqq2pdNbUUeI5cr63Xox0jvso1TkWbaAkXHQPwznOtQ8MRg7ccQOGb0kax8ypCGm65CRJli262UgeOe4qmHs7ZQaZVvxPpMWoCBNwXNstEL8Jvaa_tirKaAkymRJA9x5plysi8dJZbw1wVFMdLNdUtMHfTmWji3wXZAAjrtnLvJY9q_mQT68NtXSmSQFD-ccBEWFyv-aw55itiolBSnRqSU4ZDualKaVsY">
+<div class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-0.5">
+<span class="material-symbols-outlined text-[12px] block" data-icon="verified">verified</span>
+</div>
+</div>
+<div>
+<div class="flex items-center gap-1.5">
+<h3 class="text-headline-sm font-headline-sm font-bold text-on-surface">Aanya Rao</h3><span class="inline-flex items-center gap-1 bg-primary/10 text-primary border border-primary/20 text-label-sm font-semibold px-2 py-0.5 rounded-full"><span class="material-symbols-outlined text-[13px]">verified</span>Verified Creator</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant font-semibold">AI Filmmaker</span>
+</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="text-body-sm font-body-sm text-amber-600 font-semibold flex items-center">
+<span class="material-symbols-outlined text-[16px] text-amber-500 mr-0.5" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span> 4.9
+                </span>
+<span class="text-outline-variant">•</span>
+<span class="text-body-sm font-body-sm font-bold text-on-surface">$120/hr</span>
+<span class="text-outline-variant">•</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Mumbai / Remote</span>
+</div>
+</div>
+</div>
+</div>
+<!-- AI Model Chips -->
+<div class="flex items-center gap-1.5 flex-wrap pt-1">
+<span class="px-2.5 py-1 rounded-md bg-surface-container text-on-surface text-label-sm font-label-sm font-medium border border-outline-variant/30 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Runway Gen-3
+          </span>
+<span class="px-2.5 py-1 rounded-md bg-surface-container text-on-surface text-label-sm font-label-sm font-medium border border-outline-variant/30 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Kling 1.5
+          </span>
+<span class="px-2.5 py-1 rounded-md bg-surface-container text-on-surface text-label-sm font-label-sm font-medium border border-outline-variant/30 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span> Midjourney v6
+          </span>
+</div>
+<!-- Actions -->
+<div class="grid grid-cols-2 gap-2 pt-1">
+<button class="w-full py-2 px-3 rounded-lg border border-outline-variant/50 text-body-sm font-body-sm font-semibold text-on-surface hover:bg-surface-container transition-colors text-center active:scale-95">
+            View Profile
+          </button>
+<button class="w-full py-2 px-3 rounded-lg bg-primary text-on-primary text-body-sm font-body-sm font-semibold hover:bg-primary/95 transition-all shadow-sm text-center active:scale-95">
+            Invite to Brief
+          </button>
+</div>
+</div>
+</section>
+<!-- Module 2: AI Brief Builder & Recruiter Requirements (Unified Single Card) -->
+<section class="space-y-3">
+<div class="flex items-center justify-between">
+<h2 class="text-title-md font-title-md font-bold text-on-surface flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary" data-icon="auto_awesome">auto_awesome</span>
+          AI Brief Builder &amp; Requirements
+        </h2>
+<span class="text-label-sm font-label-sm text-primary font-bold uppercase">Dynamic Match Engine</span>
+</div>
+<div class="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 p-4 shadow-sm space-y-4">
+<!-- Natural Language Prompt Input Preview -->
+<div class="p-3 bg-surface-container-low rounded-xl border border-outline-variant/40 relative">
+<div class="flex items-center justify-between text-label-sm font-label-sm text-on-surface-variant font-semibold mb-1">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-primary" data-icon="psychology">psychology</span>
+              AI Prompt Interpreter
+            </span>
+<span class="text-tertiary">Parsed Successfully</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface italic">
+            "Looking for a top-tier AI commercial director to produce a photorealistic 20s vertical skincare ad..."
+          </p>
+</div>
+<!-- Structured Brief Output Details -->
+<div class="p-3.5 rounded-xl bg-surface-bright border border-outline-variant/20 space-y-2.5">
+<div class="flex items-start justify-between">
+<div>
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase font-medium">Campaign Name</span>
+<h4 class="text-body-md font-body-md font-bold text-on-surface">Velvet Aura — Premium Skincare Campaign</h4>
+</div>
+<div class="text-right">
+<span class="text-label-sm font-label-sm text-tertiary font-bold bg-tertiary/10 px-2 py-0.5 rounded-full border border-tertiary/20">
+                99.4% Match Score
+              </span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 pt-1 border-t border-outline-variant/20">
+<div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Content Type</span>
+<p class="text-body-sm font-body-sm font-semibold text-on-surface">AI Video • 20s</p>
+</div>
+<div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Platform</span>
+<p class="text-body-sm font-body-sm font-semibold text-on-surface">Instagram (9:16)</p>
+</div>
+<div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Budget</span>
+<p class="text-body-sm font-body-sm font-semibold text-primary">$500 – $1,000</p>
+</div>
+</div>
+</div>
+<!-- Recruiter Requirements & Ideal Talent Profile -->
+<div class="space-y-2">
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">
+            Ideal Talent Profile &amp; Requirements
+          </span>
+<ul class="space-y-2">
+<li class="flex items-start gap-2 text-body-sm font-body-sm text-on-surface">
+<span class="material-symbols-outlined text-primary text-[18px] mt-0.5 flex-shrink-0" data-icon="check_circle">check_circle</span>
+<span class="">Senior AI commercial director with proven <strong>Runway Gen-3 &amp; Kling</strong> production pipeline.</span>
+</li>
+<li class="flex items-start gap-2 text-body-sm font-body-sm text-on-surface">
+<span class="material-symbols-outlined text-primary text-[18px] mt-0.5 flex-shrink-0" data-icon="check_circle">check_circle</span>
+<span class="">Verified prompt lineage, high-res upscaling &amp; full commercial rights licensing transfer.</span>
+</li>
+<li class="flex items-start gap-2 text-body-sm font-body-sm text-on-surface">
+<span class="material-symbols-outlined text-primary text-[18px] mt-0.5 flex-shrink-0" data-icon="check_circle">check_circle</span>
+<span class="">Rapid delivery turnaround <strong>≤ 14 days</strong> with two revision cycles included.</span>
+</li>
+</ul>
+</div>
+<!-- Direct Action CTA -->
+<button class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-primary to-primary-container text-on-primary font-title-md text-title-md flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all active:scale-95">
+<span class="">Find Matching Creators (18 Available)</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</section>
+<!-- Module 3: AI Match Results & Telemetry -->
+<section class="space-y-3">
+<div class="flex items-center justify-between">
+<h2 class="text-title-md font-title-md font-bold text-on-surface flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary" data-icon="hub">hub</span>
+          AI Match Results &amp; Telemetry
+        </h2>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Live Ranking</span>
+</div>
+<!-- Active Brief Banner -->
+<div class="p-3 bg-surface-container rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="video_camera_front">video_camera_front</span>
+<div>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Active Brief Selected</p>
+<p class="text-body-sm font-body-sm font-bold text-on-surface">Premium Skincare Campaign (20s 9:16 Video)</p>
+</div>
+</div>
+<span class="px-2 py-1 rounded-full bg-primary/10 text-primary text-label-sm font-label-sm font-bold">
+          18 Matched
+        </span>
+</div>
+<!-- Top Matched Creator Fit -->
+<div class="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 p-4 shadow-sm space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<span class="w-6 h-6 rounded-full bg-primary text-white text-label-sm font-bold flex items-center justify-center">#1</span>
+<div class="flex-wrap">
+<h4 class="text-headline-sm font-headline-sm font-bold text-on-surface">Aanya Rao</h4><span class="inline-flex items-center gap-1 bg-primary/10 text-primary border border-primary/20 text-label-sm font-semibold px-2 py-0.5 rounded-full"><span class="material-symbols-outlined text-[13px]">verified</span>Verified Creator</span>
+<p class="text-label-sm font-label-sm text-tertiary font-semibold">Highest Compatibility Score</p>
+</div>
+</div>
+<!-- Radial Dial Indicator -->
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200">
+<span class="material-symbols-outlined text-emerald-600 text-[18px]" data-icon="check_circle">check_circle</span>
+<span class="text-label-md font-label-md font-bold text-emerald-700">98% Match</span>
+</div>
+</div>
+<!-- Telemetry Breakdown Box -->
+<div class="p-3 rounded-xl bg-surface-container-low border border-outline-variant/20 space-y-2">
+<p class="text-label-sm font-label-sm font-bold text-on-surface flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary" data-icon="insights">insights</span>
+            Why this creator matches your brief:
+          </p>
+<div class="grid grid-cols-1 gap-1.5 text-body-sm font-body-sm text-on-surface-variant">
+<div class="flex items-center justify-between">
+<span class="">Cinematic skincare &amp; cosmetics aesthetic</span>
+<span class="font-bold text-on-surface">99%</span>
+</div>
+<div class="w-full bg-outline-variant/30 rounded-full h-1.5">
+<div class="bg-primary h-1.5 rounded-full" style="width: 99%"></div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="">Verified Runway Gen-3 &amp; Kling workflow</span>
+<span class="font-bold text-on-surface">100%</span>
+</div>
+<div class="w-full bg-outline-variant/30 rounded-full h-1.5">
+<div class="bg-primary h-1.5 rounded-full" style="width: 100%"></div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="">Delivered 14 verified commercial brand campaigns</span>
+<span class="font-bold text-tertiary">Top 2%</span>
+</div>
+<div class="w-full bg-outline-variant/30 rounded-full h-1.5">
+<div class="bg-tertiary h-1.5 rounded-full" style="width: 95%"></div>
+</div>
+</div>
+</div>
+<!-- Sample Shot Thumbnails Preview Strip -->
+<div>
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase font-semibold">Matched Shot Previews</span>
+<div class="grid grid-cols-3 gap-2 mt-1.5">
+<div class="aspect-[9/16] rounded-lg overflow-hidden bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="Macro vertical shot of dew drops forming on organic botanical skincare bottle surrounded by soft light refractions in clean bright editorial aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9otfPt5E1uZ2Ms-DXa0c9MQFENol_QOmKpMefrz0Wlh3bDjqMfTa9Og1160o9nLYPx96W4CX9s2vUgo67kuCAuE-EDSwCUD3IctxzqV8R2bTqxTV99A-nlejB_GdvVdKurR0bc97eW9ThJmElk9UTlQ70oFmmycANXkgWy32sdWuB5SquEArdxvvdncB5q5hKI77dGG_I6UQcRcXVSED8lRKaLXsnMsK_yNAqJlA">
+<span class="absolute bottom-1 right-1 bg-black/60 text-white text-[10px] px-1 rounded font-medium">0:04</span>
+</div>
+<div class="aspect-[9/16] rounded-lg overflow-hidden bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="Vertical slow motion AI shot of silky cream serum swirling against pristine glass reflection with radiant modern studio illumination." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSI_btQ1S4P4hBlP6AgLPeOFYkuoEI7ysP4d4IY6RKfoy1UBKqbCF1DgSkcKqJqQrbTPMvQNmaYhmrvvTLKvPQPOu-W2O9xdCqd1PvdEAqpi-DXcanAbe4j6SkT-_Cy6givHKQtAz9lWM7GWA7iV8JMhgjNeUg9GKy7h3l-BkR4hZPG_yAhzvJdOYJ6venXba_uDJgibAGpIyA4GgpDUyej6nGIRigJtddLojlWbg">
+<span class="absolute bottom-1 right-1 bg-black/60 text-white text-[10px] px-1 rounded font-medium">0:06</span>
+</div>
+<div class="aspect-[9/16] rounded-lg overflow-hidden bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="Vertical shot of model profile with glowing natural skin illuminated by subtle cyan and warm sunlight in high fashion commercial aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQEcq-neGVRS2yANR4JOQSTaVyl7dUipuU2Ablx6WC4gmyiflBZFd4oRJATwP6TMYh9uKhLW82-OQ1CeqKNc0cyNz1GHNsyW2_4uVDxFelMZSaJPj4EymETnCSoPt13Ict8RNCyqShzMY6rmsp4EGi1LODSS4Oebb56u5nH0-L73AZy44zjTvCLZWulTdiFJ8evbjCEP0apoqaA8dVTL0TI9YWTiw6XXFgsCiMf6c">
+<span class="absolute bottom-1 right-1 bg-black/60 text-white text-[10px] px-1 rounded font-medium">0:10</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Module 4: Creator Deep Dive & Verification Signals -->
+<section class="space-y-3">
+<div class="flex items-center justify-between">
+<h2 class="text-title-md font-title-md font-bold text-on-surface flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary" data-icon="shield">shield</span>
+          Verification &amp; Production Pipeline
+        </h2>
+<span class="text-label-sm font-label-sm text-tertiary font-bold">Tier 1 Audited</span>
+</div>
+<div class="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 p-4 shadow-sm space-y-4">
+<!-- Verified AI Creator Signals Panel -->
+<div class="space-y-2">
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase font-semibold">Trust &amp; Integrity Signals</span>
+<div class="grid grid-cols-1 gap-2">
+<div class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low border border-outline-variant/20">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-tertiary text-[20px]" data-icon="verified_user">verified_user</span>
+<div>
+<p class="text-body-sm font-body-sm font-semibold text-on-surface">Portfolio Ownership Verified</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Original seed generation data verified</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-tertiary text-[18px]" data-icon="check">check</span>
+</div>
+<div class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low border border-outline-variant/20">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px]" data-icon="hardware">hardware</span>
+<div>
+<p class="text-body-sm font-body-sm font-semibold text-on-surface">Tooling Competency Verified</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">High-fidelity multi-model benchmark passed</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-tertiary text-[18px]" data-icon="check">check</span>
+</div>
+<div class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low border border-outline-variant/20">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="contract">contract</span>
+<div>
+<p class="text-body-sm font-body-sm font-semibold text-on-surface">Commercial Rights Guarantee</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Full IP transfer &amp; clean model pedigree</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-tertiary text-[18px]" data-icon="check">check</span>
+</div>
+</div>
+</div>
+<!-- AI Toolkit Proficiencies -->
+<div>
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase font-semibold">Active AI Toolkit &amp; Models</span>
+<div class="flex flex-wrap gap-2 mt-2">
+<span class="px-2.5 py-1.5 rounded-lg bg-surface-bright border border-outline-variant/30 text-label-md font-label-md text-on-surface font-semibold flex items-center gap-1.5 shadow-xs">
+<span class="w-2 h-2 rounded-full bg-primary"></span> Runway Gen-3
+            </span>
+<span class="px-2.5 py-1.5 rounded-lg bg-surface-bright border border-outline-variant/30 text-label-md font-label-md text-on-surface font-semibold flex items-center gap-1.5 shadow-xs">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> Kling 1.5
+            </span>
+<span class="px-2.5 py-1.5 rounded-lg bg-surface-bright border border-outline-variant/30 text-label-md font-label-md text-on-surface font-semibold flex items-center gap-1.5 shadow-xs">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span> Midjourney v6
+            </span>
+<span class="px-2.5 py-1.5 rounded-lg bg-surface-bright border border-outline-variant/30 text-label-md font-label-md text-on-surface font-semibold flex items-center gap-1.5 shadow-xs">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span> Adobe Firefly
+            </span>
+<span class="px-2.5 py-1.5 rounded-lg bg-surface-bright border border-outline-variant/30 text-label-md font-label-md text-on-surface font-semibold flex items-center gap-1.5 shadow-xs">
+<span class="w-2 h-2 rounded-full bg-on-surface-variant"></span> ElevenLabs
+            </span>
+</div>
+</div>
+<!-- 6-Stage Visual Workflow Pipeline Diagram -->
+<div>
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase font-semibold">6-Stage Production Pipeline</span>
+<div class="grid grid-cols-3 gap-2 mt-2">
+<div class="p-2 rounded-lg bg-surface-container border border-outline-variant/20 text-center">
+<span class="text-label-sm font-label-sm font-bold text-primary block">01. Brief</span>
+<span class="text-[10px] text-on-surface-variant">Requirements</span>
+</div>
+<div class="p-2 rounded-lg bg-surface-container border border-outline-variant/20 text-center">
+<span class="text-label-sm font-label-sm font-bold text-primary block">02. Concept</span>
+<span class="text-[10px] text-on-surface-variant">Moodboard</span>
+</div>
+<div class="p-2 rounded-lg bg-surface-container border border-outline-variant/20 text-center">
+<span class="text-label-sm font-label-sm font-bold text-primary block">03. Image Gen</span>
+<span class="text-[10px] text-on-surface-variant">Midjourney v6</span>
+</div>
+<div class="p-2 rounded-lg bg-surface-container border border-outline-variant/20 text-center">
+<span class="text-label-sm font-label-sm font-bold text-primary block">04. Video Gen</span>
+<span class="text-[10px] text-on-surface-variant">Runway / Kling</span>
+</div>
+<div class="p-2 rounded-lg bg-surface-container border border-outline-variant/20 text-center">
+<span class="text-label-sm font-label-sm font-bold text-primary block">05. Audio</span>
+<span class="text-[10px] text-on-surface-variant">SFX &amp; Voice</span>
+</div>
+<div class="p-2 rounded-lg bg-surface-container-high border border-primary/30 text-center">
+<span class="text-label-sm font-label-sm font-bold text-tertiary block">06. Delivery</span>
+<span class="text-[10px] text-tertiary">4K Pro Res</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Module 5: My Production Briefs & Shortlist Pipeline -->
+<section class="space-y-3">
+<div class="flex items-center justify-between">
+<h2 class="text-title-md font-title-md font-bold text-on-surface flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary" data-icon="assignment">assignment</span>
+          Active Production Briefs (4 in Pipeline)
+        </h2>
+<button class="text-label-sm font-label-sm text-primary font-bold hover:underline">View All</button>
+</div>
+<!-- Pipeline Status Tabs -->
+<div class="flex items-center gap-1.5 overflow-x-auto pb-1 custom-scroll">
+<button class="px-3 py-1 rounded-full bg-primary text-on-primary text-label-sm font-label-sm font-semibold whitespace-nowrap">
+          All (4)
+        </button>
+<button class="px-3 py-1 rounded-full bg-surface-container-lowest text-on-surface-variant border border-outline-variant/30 text-label-sm font-label-sm font-medium whitespace-nowrap">
+          Finding Creators
+        </button>
+<button class="px-3 py-1 rounded-full bg-surface-container-lowest text-on-surface-variant border border-outline-variant/30 text-label-sm font-label-sm font-medium whitespace-nowrap">
+          Creators Invited
+        </button>
+<button class="px-3 py-1 rounded-full bg-surface-container-lowest text-on-surface-variant border border-outline-variant/30 text-label-sm font-label-sm font-medium whitespace-nowrap">
+          In Progress
+        </button>
+<button class="px-3 py-1 rounded-full bg-surface-container-lowest text-on-surface-variant border border-outline-variant/30 text-label-sm font-label-sm font-medium whitespace-nowrap">
+          Completed
+        </button>
+</div>
+<!-- Brief Card 1: Luxury Skincare Campaign -->
+<div class="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 p-4 shadow-sm space-y-3">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="text-label-sm font-label-sm text-primary font-bold uppercase">Finding Creators</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm font-bold text-on-surface mt-0.5">Luxury Skincare Campaign</h3>
+</div>
+<span class="text-body-sm font-body-sm font-bold text-on-surface bg-surface-container px-2.5 py-1 rounded-lg">
+            $500 – $1,000
+          </span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant pt-1 border-t border-outline-variant/20">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-outline" data-icon="event">event</span>
+            Deadline: Oct 20
+          </span>
+<span class="text-tertiary font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="groups">groups</span>
+            18 matching creators
+          </span>
+</div>
+<button class="w-full py-2.5 rounded-xl bg-surface-container hover:bg-surface-container-high text-primary font-title-md text-title-md font-semibold transition-colors flex items-center justify-center gap-1.5 active:scale-95">
+<span class="">View Matches</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<!-- Brief Card 2: Fintech App 3D Visual Assets -->
+<div class="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 p-4 shadow-sm space-y-3">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="text-label-sm font-label-sm text-tertiary font-bold uppercase">In Progress</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm font-bold text-on-surface mt-0.5">Fintech App 3D Visual Assets</h3>
+</div>
+<span class="text-body-sm font-body-sm font-bold text-on-surface bg-surface-container px-2.5 py-1 rounded-lg">
+            $850 Agreed
+          </span>
+</div>
+<!-- Talent Hired & Milestone Status -->
+<div class="p-2.5 rounded-xl bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-high flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Portrait photo of Marcus Chen creative AI engineer working in high-tech studio environment with soft blue computer monitor reflection." src="https://lh3.googleusercontent.com/aida-public/AB6AXuATjDcgJi13gmk9zzf2ZfwaJxSnX0NcXCB1gQOhgePgAq5MFXwwCpLKse4ckMfMwwcIzZjwemCkkF8498uH8G99w_Fw-q7ePsqxDR0XzsduigARRHcZGdJ8nYpfNOAkMEeAUQSPWBeohLVJHMNjBm6_FKpHcHI-sK2Rw927v4xQUNdHBN2o4653vF7097r9tG_ne5gsqLRJEW_jl79CAhPyqksEM1MWXf36J-utHEg">
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Hired Creator</p>
+<p class="text-body-sm font-body-sm font-bold text-on-surface">Marcus Chen</p>
+</div>
+</div>
+<div class="text-right">
+<span class="text-label-sm font-label-sm text-primary font-bold">Milestone 2 of 3</span>
+<p class="text-label-sm font-label-sm text-on-surface-variant">In Review</p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="w-full bg-outline-variant/30 rounded-full h-2 mr-3">
+<div class="bg-primary h-2 rounded-full" style="width: 66%"></div>
+</div>
+<button class="px-3 py-1.5 rounded-lg border border-outline-variant/40 text-label-md font-label-md font-semibold text-on-surface hover:bg-surface-container flex-shrink-0 active:scale-95">
+            Workspace
+          </button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar: Shared Component execution -->
+<!-- Contextual Active Destination: Discover (Closest match for master discovery hub) -->
+<nav class="bg-surface/95 backdrop-blur-lg fixed bottom-0 left-0 w-full z-50 flex items-center justify-around px-2 py-2 h-16 max-w-7xl mx-auto shadow-lg">
+<!-- Tab 1: Discover (Active) -->
+<button aria-label="Discover" class="flex flex-col items-center justify-center text-primary font-semibold scale-105 transition-all duration-150">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="text-label-sm font-label-sm font-semibold mt-0.5">Discover</span>
+</button>
+<!-- Tab 2: AI Brief -->
+<button aria-label="AI Brief" class="flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors duration-150 active:scale-90">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+<span class="text-label-sm font-label-sm font-semibold mt-0.5">AI Brief</span>
+</button>
+<!-- Tab 3: Matches -->
+<button aria-label="Matches" class="flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors duration-150 active:scale-90">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+<span class="text-label-sm font-label-sm font-semibold mt-0.5">Matches</span>
+</button>
+<!-- Tab 4: Saved -->
+<button aria-label="Saved" class="flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors duration-150 active:scale-90">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+<span class="text-label-sm font-label-sm font-semibold mt-0.5">Saved</span>
+</button>
+<!-- Tab 5: My Briefs -->
+<button aria-label="My Briefs" class="flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors duration-150 active:scale-90">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span class="text-label-sm font-label-sm font-semibold mt-0.5">My Briefs</span>
+</button>
+</nav>
+
+
+</body></html>
