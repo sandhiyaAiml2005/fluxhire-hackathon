@@ -1,47 +1,32 @@
-# ⚡ FluxHire — AI Creator Marketplace & Intelligent Pipeline
+# FLIXHIRE
+AI Creator Marketplace — full-stack hackathon demo.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Frontend: Vanilla JS](https://img.shields.io/badge/Frontend-Vanilla%20JS%20%2B%20HTML5-yellow.svg)](index.html)
-[![Styling: Tailwind Design System](https://img.shields.io/badge/Design-Tailwind%20%2B%20Stitch%20Tokens-indigo.svg)](DESIGN.md)
-[![Backend: Python 3 REST](https://img.shields.io/badge/Backend-Python%203%20(Zero--Dep)-green.svg)](server.py)
-[![Hackathon: Production Ready](https://img.shields.io/badge/Status-Hackathon%20MVP%20Ready-brightgreen.svg)]()
+## Requirements
+Java 17+, Maven 3.9+, browser.
 
-> **The first AI-native talent platform connecting enterprise brands and creative agencies with verified generative AI filmmakers, commercial animators, and prompt directors.**
+## Backend
+cd backend
+mvn spring-boot:run
 
----
+Runs at http://localhost:8080
 
-## 📌 Executive Summary
+Health: http://localhost:8080/api/health
 
-Traditional freelance platforms (Upwork, Fiverr) were built for legacy toolchains and struggle to evaluate generative AI workflows. Meanwhile, brands looking to produce commercial AI campaigns face critical bottlenecks:
-- **Unverified Tool Proficiencies**: Distinguishing between casual prompters and production-grade technical directors with custom ComfyUI nodes, LoRA checkpoints, or temporal video workflows.
-- **Copyright & IP Uncertainty**: Ensuring clean model lineages, commercial release rights, and high-resolution upscaling pipelines.
-- **Vague Scoping**: Converting high-level creative briefs into structured parameters (frame rates, seed consistency, aspect ratios, model pipelines).
+## Frontend
+From the frontend folder:
+python -m http.server 5173
 
-**FluxHire** solves this by combining:
-1. **Natural Language AI Brief Decomposition**: Transforming creative prompts into executable technical specifications.
-2. **Multi-Model Pipeline Verification**: Auditing creator proficiencies across Runway Gen-3, Kling 1.5, Midjourney v6, ComfyUI, FLUX, and Adobe Firefly.
-3. **Real-Time Match Telemetry**: Explaining algorithmic recommendation scores across aesthetic alignment, tooling pipelines, and commercial track records.
+Open http://localhost:5173
 
----
+## APIs
+GET /api/creators
+GET /api/creators/{id}
+GET /api/health
 
-## 🚀 Quick Start (Run Locally in Seconds)
+Examples:
+GET /api/creators?tool=Kling
+GET /api/creators?specialization=AI%20Filmmaking&format=Video
+GET /api/creators?sort=rating
+GET /api/creators?search=Midjourney
 
-FluxHire is engineered with **zero external dependencies**. No `npm install`, no virtual environments, and no complex configuration required.
-
-### Option 1: Standalone Python Server (Recommended)
-```bash
-# Clone or navigate to the repository
-cd fluxhire-ai-marketplace
-
-# Start the unified backend and frontend server
-python server.py 3000
-Open http://localhost:3000 in your browser.
-
-Option 2: Any Static Web Server
-bash
-# Using Node / NPX
-npx serve -l 3000 .
-Option 3: Direct File Execution
-Double-click index.html to run directly in Google Chrome, Microsoft Edge, or Mozilla Firefox.
-
-
+Creator data is demo/in-memory data for hackathon evaluation.
