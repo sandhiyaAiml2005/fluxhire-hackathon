@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>FluxHire - AI Creator Marketplace & Intelligent Pipeline</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="FluxHire connects world-class generative AI creators and commercial directors with leading brands through real-time AI brief parsing and capability matching." />
+  
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  
+  <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-error": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "secondary-fixed-dim": "#7bd0ff",
+            "on-surface-variant": "#464554",
+            "surface-bright": "#faf8ff",
+            "secondary": "#00668a",
+            "on-background": "#131b2e",
+            "inverse-surface": "#283044",
+            "primary-fixed-dim": "#c0c1ff",
+            "surface": "#faf8ff",
+            "on-tertiary": "#ffffff",
+            "primary-fixed": "#e1e0ff",
+            "surface-variant": "#dae2fd",
+            "surface-tint": "#494bd6",
+            "error": "#ba1a1a",
+            "secondary-fixed": "#c4e7ff",
+            "primary-container": "#6063ee",
+            "outline": "#767586",
+            "background": "#faf8ff",
+            "on-secondary-container": "#004d6a",
+            "tertiary": "#006c49",
+            "primary": "#4648d4",
+            "surface-container-high": "#e2e7ff",
+            "on-error-container": "#93000a",
+            "tertiary-fixed": "#6ffbbe",
+            "on-secondary-fixed": "#001e2c",
+            "secondary-container": "#40c2fd",
+            "outline-variant": "#c7c4d7",
+            "surface-dim": "#d2d9f4",
+            "inverse-on-surface": "#eef0ff",
+            "on-tertiary-container": "#000703",
+            "on-surface": "#131b2e",
+            "on-tertiary-fixed-variant": "#005236",
+            "surface-container-highest": "#dae2fd",
+            "on-primary-fixed-variant": "#2f2ebe",
+            "on-primary": "#ffffff",
+            "on-tertiary-fixed": "#002113",
+            "inverse-primary": "#c0c1ff",
+            "error-container": "#ffdad6",
+            "tertiary-container": "#00885d",
+            "surface-container-low": "#f2f3ff",
+            "on-secondary-fixed-variant": "#004c69",
+            "on-primary-fixed": "#07006c",
+            "surface-container": "#eaedff",
+            "tertiary-fixed-dim": "#4edea3",
+            "on-secondary": "#ffffff",
+            "on-primary-container": "#fffbff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "3xl": "1.5rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter": "1.5rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2.5rem",
+            "space-md": "1rem",
+            "gutter-mobile": "1rem",
+            "margin": "2rem",
+            "space-sm": "0.5rem",
+            "margin-mobile": "1rem",
+            "space-xs": "0.25rem"
+          },
+          "fontFamily": {
+            "body-lg": ["Inter", "sans-serif"],
+            "headline-lg": ["Plus Jakarta Sans", "sans-serif"],
+            "label-sm": ["Inter", "sans-serif"],
+            "display": ["Plus Jakarta Sans", "sans-serif"],
+            "display-mobile": ["Plus Jakarta Sans", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "headline-sm": ["Plus Jakarta Sans", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "title-md": ["Inter", "sans-serif"],
+            "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-lg-mobile": ["Plus Jakarta Sans", "sans-serif"],
+            "label-md": ["Inter", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Supplemental Styles -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="bg-background text-on-surface antialiased selection:bg-primary selection:text-white min-h-screen pb-20 md:pb-12">
+
+  <!-- ================= TOP APP BAR ================= -->
+  <header class="bg-surface/90 backdrop-blur-md sticky top-0 z-50 border-b border-outline-variant/30 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo & Identity -->
+      <div class="flex items-center gap-3 cursor-pointer select-none" onclick="navigateTo('discover')">
+        <div class="relative w-9 h-9 rounded-full ring-2 ring-primary/20 overflow-hidden flex-shrink-0 bg-surface-container-high">
+          <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCILi4lnMJJOEHOp_iHlEgTqxvm5mdHJYQYFsKpkanZ8Jv13KxEOX2tW7u4QyrmZOxvA4p4xHCyTXTsQ8kGq0527kuSHtj63mOJu2FAIbd00ZOoB077fhVRHbXdHbYPifBYQTFIXa_ZQ96g7tOmCo-ST9OQeJyY4Wmh32ck0uvqUx0d9BQF_6-nPj77QG4zTwXgs8lq9Rqieg0dnjob9sdbzpvPhyd4rQjWp1OxHwc" alt="FluxHire Brand" />
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="text-headline-sm font-bold text-primary tracking-tight">FluxHire</span>
+            <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+          </div>
+          <p class="text-label-sm text-on-surface-variant font-medium -mt-1 hidden sm:block">AI Creator Marketplace</p>
+        </div>
+      </div>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-1 lg:gap-2">
+        <button data-view="discover" onclick="navigateTo('discover')" class="desktop-nav-link px-3 py-1.5 rounded-lg text-body-sm font-bold text-primary hover:bg-surface-container transition-colors flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[18px]">explore</span>
+          <span>Discover</span>
+        </button>
+
+        <button data-view="brief-builder" onclick="navigateTo('brief-builder')" class="desktop-nav-link px-3 py-1.5 rounded-lg text-body-sm font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+          <span>Create AI Brief</span>
+        </button>
+
+        <button data-view="matches" onclick="navigateTo('matches')" class="desktop-nav-link px-3 py-1.5 rounded-lg text-body-sm font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[18px]">hub</span>
+          <span>AI Matches</span>
+        </button>
+
+        <button data-view="shortlist" onclick="navigateTo('shortlist')" class="desktop-nav-link px-3 py-1.5 rounded-lg text-body-sm font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[18px]">bookmark</span>
+          <span>Shortlist</span>
+          <span id="nav-shortlist-count" class="bg-primary/10 text-primary px-1.5 py-0.2 rounded-full text-[11px] font-bold">1</span>
+        </button>
+
+        <button data-view="my-briefs" onclick="navigateTo('my-briefs')" class="desktop-nav-link px-3 py-1.5 rounded-lg text-body-sm font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[18px]">assignment</span>
+          <span>My Briefs</span>
+        </button>
+      </nav>
+
+      <!-- Trailing Action & Notifications -->
+      <div class="flex items-center gap-2 relative">
+        <button id="notifications-btn" onclick="toggleNotificationsPopover()" aria-label="Notifications" class="relative p-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors active:scale-95">
+          <span class="material-symbols-outlined">notifications</span>
+          <span id="notifications-badge" class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface"></span>
+        </button>
+
+        <button onclick="navigateTo('brief-builder')" class="flex items-center gap-1.5 bg-gradient-to-r from-primary to-primary-container text-on-primary px-3.5 py-1.5 rounded-lg text-label-md font-semibold shadow-sm hover:opacity-95 transition-all active:scale-95">
+          <span class="material-symbols-outlined text-[16px]">add</span>
+          <span>Post Brief</span>
+        </button>
+
+        <!-- Notifications Drawer Popover -->
+        <div id="notifications-popover" class="hidden absolute right-0 top-12 w-80 sm:w-96 bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-xl p-4 z-50 space-y-3">
+          <div class="flex items-center justify-between pb-2 border-b border-outline-variant/20">
+            <span class="text-title-md font-bold text-on-surface flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-primary text-[18px]">notifications_active</span>
+              Activity & Matches
+            </span>
+            <button onclick="toggleNotificationsPopover()" class="text-label-sm text-on-surface-variant hover:text-primary">
+              <span class="material-symbols-outlined text-[18px]">close</span>
+            </button>
+          </div>
+          <div id="notifications-list" class="space-y-2 max-h-72 overflow-y-auto custom-scroll">
+            <!-- Injected by app.js -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 space-y-6">
+
+    <!-- VIEW 1: DISCOVER -->
+    <div id="view-discover" class="view-section active space-y-6">
+      
+      <!-- Executive Stats -->
+      <section class="bg-gradient-to-br from-surface-container-lowest via-surface-container-low to-surface-variant/30 rounded-2xl p-5 sm:p-7 border border-outline-variant/30 shadow-sm relative overflow-hidden">
+        <div class="absolute -right-10 -top-10 w-48 h-48 bg-primary-fixed-dim/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-label-sm font-semibold uppercase tracking-wider mb-2">
+          <span class="material-symbols-outlined text-[14px]">auto_awesome</span>
+          <span>AI-Native Creator Discovery & Pipeline</span>
+        </div>
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div class="max-w-2xl">
+            <h1 class="text-headline-lg-mobile sm:text-headline-lg font-bold text-on-surface tracking-tight">
+              Intelligent Creator Ecosystem
+            </h1>
+            <p class="text-body-md text-on-surface-variant mt-1.5 leading-relaxed">
+              Bridge multi-model generative workflows with enterprise creative briefs seamlessly. Discover verified AI commercial directors, animators, and designers.
+            </p>
+          </div>
+          <div class="flex-shrink-0">
+            <button onclick="navigateTo('brief-builder')" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-on-primary font-semibold text-body-sm shadow-md hover:opacity-95 transition-all active:scale-95">
+              <span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+              <span>Launch AI Brief Builder</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Metric Cards -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-6">
+          <div class="bg-surface-container-lowest p-3.5 rounded-xl border border-outline-variant/30 shadow-sm">
+            <div class="flex items-center justify-between text-on-surface-variant">
+              <span class="text-label-sm font-medium">AI Creators</span>
+              <span class="material-symbols-outlined text-primary text-[18px]">groups</span>
+            </div>
+            <div class="text-headline-sm font-bold text-on-surface mt-1">1,248</div>
+            <span class="text-label-sm text-tertiary font-semibold flex items-center gap-0.5 mt-0.5">
+              <span class="material-symbols-outlined text-[12px]">trending_up</span> +34 this week
+            </span>
+          </div>
+
+          <div class="bg-surface-container-lowest p-3.5 rounded-xl border border-outline-variant/30 shadow-sm">
+            <div class="flex items-center justify-between text-on-surface-variant">
+              <span class="text-label-sm font-medium">Verified Signals</span>
+              <span class="material-symbols-outlined text-secondary text-[18px]">verified</span>
+            </div>
+            <div class="text-headline-sm font-bold text-on-surface mt-1">94%</div>
+            <span class="text-label-sm text-on-surface-variant mt-0.5">Tooling & IP audit</span>
+          </div>
+
+          <div class="bg-surface-container-lowest p-3.5 rounded-xl border border-outline-variant/30 shadow-sm">
+            <div class="flex items-center justify-between text-on-surface-variant">
+              <span class="text-label-sm font-medium">Avg Rating</span>
+              <span class="material-symbols-outlined text-amber-500 text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+            </div>
+            <div class="text-headline-sm font-bold text-on-surface mt-1">4.9★</div>
+            <span class="text-label-sm text-on-surface-variant mt-0.5">From 3,400+ jobs</span>
+          </div>
+
+          <div class="bg-surface-container-lowest p-3.5 rounded-xl border border-outline-variant/30 shadow-sm">
+            <div class="flex items-center justify-between text-on-surface-variant">
+              <span class="text-label-sm font-medium">Speedup</span>
+              <span class="material-symbols-outlined text-primary-container text-[18px]">bolt</span>
+            </div>
+            <div class="text-headline-sm font-bold text-primary mt-1">10x</div>
+            <span class="text-label-sm text-on-surface-variant mt-0.5">Faster discovery</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Discovery & Filters -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <h2 class="text-title-md sm:text-headline-sm font-bold text-on-surface flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary">explore</span>
+            Creator Discovery
+          </h2>
+          <span id="creators-count-label" class="inline-flex items-center px-3 py-1 rounded-full bg-tertiary/10 text-tertiary text-label-sm font-bold border border-tertiary/20">
+            8 Creators Found
+          </span>
+        </div>
+
+        <div class="bg-surface-container-lowest p-4 rounded-2xl border border-outline-variant/30 shadow-sm space-y-3">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+            <div class="relative md:col-span-1">
+              <span class="material-symbols-outlined absolute left-3 top-2.5 text-outline">search</span>
+              <input id="search-input" class="w-full h-10 pl-9 pr-8 rounded-xl bg-surface-container-low border border-outline-variant/40 text-body-sm placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Search name, tool, skill..." type="text" />
+              <button onclick="clearSearchQuery()" class="absolute right-2.5 top-2.5 text-on-surface-variant hover:text-primary">
+                <span class="material-symbols-outlined text-[16px]">close</span>
+              </button>
+            </div>
+
+            <div>
+              <select id="filter-specialization" class="w-full h-10 px-3 rounded-xl bg-surface-container-low border border-outline-variant/40 text-label-md text-on-surface font-semibold focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
+                <option value="All">All Specializations</option>
+                <option value="AI Filmmaking">AI Filmmaking</option>
+                <option value="AI Animation">AI Animation</option>
+                <option value="Generative Design">Generative Design</option>
+                <option value="Product Advertising">Product Advertising</option>
+                <option value="AI Art Direction">AI Art Direction</option>
+              </select>
+            </div>
+
+            <div>
+              <select id="filter-tools" class="w-full h-10 px-3 rounded-xl bg-surface-container-low border border-outline-variant/40 text-label-md text-on-surface font-semibold focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
+                <option value="All">All AI Tools</option>
+                <option value="Runway Gen-3">Runway Gen-3</option>
+                <option value="Kling">Kling</option>
+                <option value="Midjourney">Midjourney</option>
+                <option value="ComfyUI">ComfyUI</option>
+                <option value="Stable Diffusion">Stable Diffusion</option>
+                <option value="FLUX">FLUX</option>
+                <option value="Adobe Firefly">Adobe Firefly</option>
+              </select>
+            </div>
+
+            <div>
+              <select id="filter-formats" class="w-full h-10 px-3 rounded-xl bg-surface-container-low border border-outline-variant/40 text-label-md text-on-surface font-semibold focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary">
+                <option value="All">All Formats</option>
+                <option value="Video">Video</option>
+                <option value="Image">Image</option>
+                <option value="Animation">Animation</option>
+                <option value="3D">3D</option>
+                <option value="Social Ads">Social Ads</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="active-filters-bar" class="flex items-center gap-2 flex-wrap pt-1 border-t border-outline-variant/20 hidden"></div>
+        </div>
+
+        <!-- Creator Grid -->
+        <div id="creators-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+      </section>
+
+      <section class="bg-surface-container-lowest rounded-2xl border border-primary/20 p-5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <span class="text-label-sm font-bold text-primary uppercase">Automated Talent Matching</span>
+          <h3 class="text-headline-sm font-bold text-on-surface">Have a specific campaign brief?</h3>
+          <p class="text-body-sm text-on-surface-variant">Describe your deliverables in plain English. Our engine parses parameters and ranks optimal creators.</p>
+        </div>
+        <button onclick="navigateTo('brief-builder')" class="px-5 py-2.5 rounded-xl bg-primary text-on-primary font-semibold text-body-sm flex-shrink-0 flex items-center justify-center gap-2 shadow-sm hover:opacity-95 active:scale-95 transition-all">
+          <span>Create AI Brief</span>
+          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </button>
+      </section>
+    </div>
+
+    <!-- VIEW 2: AI BRIEF BUILDER -->
+    <div id="view-brief-builder" class="view-section space-y-6">
+      <div class="flex items-center justify-between flex-wrap gap-2">
+        <div>
+          <h2 class="text-title-md sm:text-headline-sm font-bold text-on-surface flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary">auto_awesome</span>
+            AI Brief Builder & Requirements
+          </h2>
+          <p class="text-body-sm text-on-surface-variant">Transform freeform natural language campaign requests into structured parameters.</p>
+        </div>
+        <span class="text-label-sm text-primary font-bold uppercase bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
+          Dynamic Match Engine
+        </span>
+      </div>
+
+      <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 p-5 shadow-sm space-y-4">
+        <div class="flex items-center justify-between text-label-sm text-on-surface-variant font-semibold">
+          <span class="flex items-center gap-1.5 text-on-surface">
+            <span class="material-symbols-outlined text-[18px] text-primary">psychology</span>
+            Natural Language Brief Input
+          </span>
+          <span class="text-tertiary font-bold flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Ready to Parse
+          </span>
+        </div>
+
+        <div class="space-y-1.5">
+          <span class="text-label-sm text-on-surface-variant font-medium">Try a sample campaign prompt:</span>
+          <div class="flex items-center gap-2 flex-wrap">
+            <button onclick="fillPromptTemplate('skincare')" class="px-2.5 py-1 rounded-lg bg-surface-container hover:bg-surface-container-high border border-outline-variant/30 text-label-sm font-semibold text-on-surface flex items-center gap-1 transition-colors active:scale-95">
+              <span>✨ Luxury Skincare 20s Reel</span>
+            </button>
+            <button onclick="fillPromptTemplate('fintech')" class="px-2.5 py-1 rounded-lg bg-surface-container hover:bg-surface-container-high border border-outline-variant/30 text-label-sm font-semibold text-on-surface flex items-center gap-1 transition-colors active:scale-95">
+              <span>💎 Fintech 3D Asset System</span>
+            </button>
+            <button onclick="fillPromptTemplate('streetwear')" class="px-2.5 py-1 rounded-lg bg-surface-container hover:bg-surface-container-high border border-outline-variant/30 text-label-sm font-semibold text-on-surface flex items-center gap-1 transition-colors active:scale-95">
+              <span>⚡ Urban Streetwear Lookbook</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="relative">
+          <textarea id="prompt-input" rows="4" class="w-full p-3.5 rounded-xl bg-surface-container-low border border-outline-variant/40 text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-y" placeholder="Describe what you need (e.g. format, duration, lighting, tools, budget, brand feeling)...">I need a 20-second premium skincare advertisement for Instagram with cinematic visuals, soft morning lighting and a luxury feel.</textarea>
+        </div>
+
+        <button id="generate-brief-btn" onclick="generateAIBrief()" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold text-body-md flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all active:scale-95">
+          <span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+          <span>Generate Structured AI Brief</span>
+        </button>
+      </div>
+
+      <div id="brief-output-container" class="space-y-4"></div>
+    </div>
+
+    <!-- VIEW 3: AI MATCHES -->
+    <div id="view-matches" class="view-section space-y-6">
+      <div class="flex items-center justify-between flex-wrap gap-2">
+        <div>
+          <h2 class="text-title-md sm:text-headline-sm font-bold text-on-surface flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary">hub</span>
+            AI Match Results & Telemetry
+          </h2>
+          <p class="text-body-sm text-on-surface-variant">Candidates dynamically ranked by prompt compatibility, tooling pipeline, and commercial verification.</p>
+        </div>
+        <span class="text-label-sm font-bold text-tertiary bg-tertiary/10 px-3 py-1 rounded-full border border-tertiary/20 flex items-center gap-1">
+          <span class="w-2 h-2 rounded-full bg-tertiary"></span> Live Telemetry Ranking
+        </span>
+      </div>
+
+      <div class="p-4 bg-surface-container-lowest rounded-2xl border border-outline-variant/30 flex items-center justify-between flex-wrap gap-3 shadow-sm">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-[22px]">video_camera_front</span>
+          </div>
+          <div>
+            <span class="text-label-sm text-on-surface-variant font-medium">Active Brief Selected</span>
+            <h3 id="matches-brief-name" class="text-body-md font-bold text-on-surface">Premium Skincare Campaign</h3>
+            <p id="matches-brief-sub" class="text-label-sm text-on-surface-variant">20s 9:16 Video • Instagram • Budget: $500 – $1,000</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span class="px-3 py-1 rounded-full bg-primary/10 text-primary text-label-sm font-bold border border-primary/20">
+            18 Creators Matched
+          </span>
+          <button onclick="navigateTo('brief-builder')" class="px-3 py-1 rounded-lg border border-outline-variant/40 hover:bg-surface-container text-label-sm font-semibold text-on-surface transition-colors">
+            Change Brief
+          </button>
+        </div>
+      </div>
+
+      <div id="matches-list-container" class="space-y-4"></div>
+    </div>
+
+    <!-- VIEW 4: SHORTLIST -->
+    <div id="view-shortlist" class="view-section space-y-6">
+      <div class="flex items-center justify-between flex-wrap gap-2">
+        <div>
+          <h2 id="shortlist-header-count" class="text-title-md sm:text-headline-sm font-bold text-on-surface flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary">bookmark</span>
+            Shortlisted Creators (1)
+          </h2>
+          <p class="text-body-sm text-on-surface-variant">Your handpicked roster of candidate AI creators for current and upcoming briefs.</p>
+        </div>
+        <button onclick="navigateTo('discover')" class="px-4 py-2 rounded-xl border border-outline-variant/40 hover:bg-surface-container text-body-sm font-semibold text-on-surface transition-colors flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[18px]">add</span>
+          <span>Add More Creators</span>
+        </button>
+      </div>
+
+      <div id="shortlist-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    </div>
+
+    <!-- VIEW 5: MY BRIEFS -->
+    <div id="view-my-briefs" class="view-section space-y-6">
+      <div class="flex items-center justify-between flex-wrap gap-2">
+        <div>
+          <h2 class="text-title-md sm:text-headline-sm font-bold text-on-surface flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary">assignment</span>
+            Production Briefs Dashboard
+          </h2>
+          <p class="text-body-sm text-on-surface-variant">Manage your project pipelines, review matching creators, and track invited talent milestones.</p>
+        </div>
+        <button onclick="navigateTo('brief-builder')" class="px-4 py-2 rounded-xl bg-primary text-on-primary font-semibold text-body-sm flex items-center gap-1.5 shadow-sm hover:opacity-95 active:scale-95 transition-all">
+          <span class="material-symbols-outlined text-[18px]">add</span>
+          <span>Create New Brief</span>
+        </button>
+      </div>
+
+      <div class="flex items-center gap-2 overflow-x-auto pb-1 custom-scroll">
+        <button data-tab="All" onclick="setBriefFilterTab('All')" class="brief-tab-btn px-3.5 py-1.5 rounded-full bg-primary text-on-primary text-label-md font-semibold whitespace-nowrap shadow-xs">
+          All (3)
+        </button>
+        <button data-tab="Finding Creators" onclick="setBriefFilterTab('Finding Creators')" class="brief-tab-btn px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant border border-outline-variant/30 text-label-md font-medium whitespace-nowrap hover:border-primary">
+          Finding Creators
+        </button>
+        <button data-tab="Creators Invited" onclick="setBriefFilterTab('Creators Invited')" class="brief-tab-btn px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant border border-outline-variant/30 text-label-md font-medium whitespace-nowrap hover:border-primary">
+          Creators Invited
+        </button>
+        <button data-tab="In Progress" onclick="setBriefFilterTab('In Progress')" class="brief-tab-btn px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant border border-outline-variant/30 text-label-md font-medium whitespace-nowrap hover:border-primary">
+          In Progress
+        </button>
+        <button data-tab="Completed" onclick="setBriefFilterTab('Completed')" class="brief-tab-btn px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant border border-outline-variant/30 text-label-md font-medium whitespace-nowrap hover:border-primary">
+          Completed
+        </button>
+      </div>
+
+      <div id="briefs-list-container" class="space-y-4"></div>
+    </div>
+
+  </main>
+
+  <!-- CREATOR PROFILE MODAL -->
+  <div id="creator-profile-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 modal-overlay overflow-y-auto">
+    <div class="relative w-full max-w-3xl bg-surface-container-lowest rounded-2xl shadow-2xl border border-outline-variant/30 overflow-hidden modal-dialog my-8">
+      <div id="profile-modal-content"></div>
+    </div>
+  </div>
+
+  <!-- INVITE MODAL -->
+  <div id="invite-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 modal-overlay">
+    <div class="relative w-full max-w-lg bg-surface-container-lowest rounded-2xl shadow-2xl border border-outline-variant/30 overflow-hidden modal-dialog p-5 sm:p-6 space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-outline-variant/20">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container ring-2 ring-primary/20 flex-shrink-0">
+            <img id="invite-creator-avatar" class="w-full h-full object-cover" src="" alt="Creator" />
+          </div>
+          <div>
+            <h3 class="text-headline-sm font-bold text-on-surface">Invite <span id="invite-creator-name">Creator</span></h3>
+            <p class="text-label-sm text-on-surface-variant">Send a campaign proposal request</p>
+          </div>
+        </div>
+        <button onclick="closeInviteModal()" class="text-on-surface-variant hover:text-on-surface">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <div class="space-y-1.5">
+        <label class="text-label-sm font-semibold text-on-surface block">Select Campaign Brief</label>
+        <select id="invite-brief-select" class="w-full h-10 px-3 rounded-xl bg-surface-container-low border border-outline-variant/40 text-body-sm font-semibold text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"></select>
+      </div>
+
+      <div class="space-y-1.5">
+        <label class="text-label-sm font-semibold text-on-surface block">Proposal Invitation Message</label>
+        <textarea id="invite-message-input" rows="4" class="w-full p-3 rounded-xl bg-surface-container-low border border-outline-variant/40 text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary resize-y"></textarea>
+      </div>
+
+      <div class="p-3 rounded-xl bg-surface-container-low border border-outline-variant/20 flex items-center justify-between text-label-sm">
+        <span class="text-on-surface-variant flex items-center gap-1">
+          <span class="material-symbols-outlined text-tertiary text-[16px]">verified</span> Commercial Buyout Included
+        </span>
+        <span class="font-bold text-primary">Standard Escrow Protected</span>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-2 border-t border-outline-variant/20">
+        <button onclick="closeInviteModal()" class="px-4 py-2 rounded-xl border border-outline-variant/40 text-body-sm font-semibold text-on-surface hover:bg-surface-container transition-all">Cancel</button>
+        <button onclick="sendInvitation()" class="px-5 py-2 rounded-xl bg-primary text-on-primary text-body-sm font-semibold shadow-sm hover:opacity-95 transition-all flex items-center gap-1.5 active:scale-95">
+          <span class="material-symbols-outlined text-[16px]">send</span>
+          <span>Send Invitation</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toast-container"></div>
+
+  <!-- MOBILE BOTTOM BAR -->
+  <nav class="md:hidden bg-surface/95 backdrop-blur-lg fixed bottom-0 left-0 w-full z-40 flex items-center justify-around px-2 py-2 h-16 shadow-lg border-t border-outline-variant/20">
+    <button data-view="discover" onclick="navigateTo('discover')" aria-label="Discover" class="mobile-nav-link flex flex-col items-center justify-center text-primary font-semibold transition-all duration-150">
+      <span class="material-symbols-outlined">explore</span>
+      <span class="text-label-sm font-semibold mt-0.5">Discover</span>
+    </button>
+    <button data-view="brief-builder" onclick="navigateTo('brief-builder')" aria-label="AI Brief" class="mobile-nav-link flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors duration-150 active:scale-90">
+      <span class="material-symbols-outlined">auto_awesome</span>
+      <span class="text-label-sm font-semibold mt-0.5">AI Brief</span>
+    </button>
+    <button data-view="matches" onclick="navigateTo('matches')" aria-label="Matches" class="mobile-nav-link flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors duration-150 active:scale-90">
+      <span class="material-symbols-outlined">hub</span>
+      <span class="text-label-sm font-semibold mt-0.5">Matches</span>
+    </button>
+    <button data-view="shortlist" onclick="navigateTo('shortlist')" aria-label="Shortlist" class="mobile-nav-link relative flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors duration-150 active:scale-90">
+      <span class="material-symbols-outlined">bookmark</span>
+      <span class="text-label-sm font-semibold mt-0.5">Shortlist</span>
+      <span id="mobile-shortlist-count" class="absolute -top-1 right-2 bg-primary text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">1</span>
+    </button>
+    <button data-view="my-briefs" onclick="navigateTo('my-briefs')" aria-label="My Briefs" class="mobile-nav-link flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors duration-150 active:scale-90">
+      <span class="material-symbols-outlined">assignment</span>
+      <span class="text-label-sm font-semibold mt-0.5">My Briefs</span>
+    </button>
+  </nav>
+
+  <script src="app.js"></script>
+</body>
+</html>
