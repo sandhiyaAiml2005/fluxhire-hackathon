@@ -1,0 +1,4 @@
+com\flixhire\controller\CreatorController.class
+com\flixhire\service\CreatorService.class
+com\flixhire\FlixHireApplication.class
+com\flixhire\model\Creator.class
