@@ -1,1189 +1,778 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>FLIXHIRE — AI Creator Marketplace</title>
-
 <style>
-
-:root{
---bg:#f7f8fc;
---surface:#ffffff;
---surface2:#f0f2f8;
---text:#121522;
---muted:#697084;
---line:#e3e6ee;
---accent:#6d4aff;
---accent2:#8b72ff;
---green:#18a86b;
---red:#e05252;
---shadow:0 14px 40px rgba(28,31,52,.08);
-}
-
-*{
-box-sizing:border-box;
-}
-
-body{
-margin:0;
-font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-background:var(--bg);
-color:var(--text);
-}
-
-button,
-input,
-select,
-textarea{
-font:inherit;
-}
-
-button{
-cursor:pointer;
-}
-
-header{
-height:72px;
-background:rgba(255,255,255,.95);
-border-bottom:1px solid var(--line);
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 34px;
-position:sticky;
-top:0;
-z-index:30;
-backdrop-filter:blur(12px);
-}
-
-.logo{
-display:flex;
-gap:10px;
-align-items:center;
-font-weight:800;
-font-size:19px;
-}
-
-.mark{
-width:36px;
-height:36px;
-border-radius:11px;
-background:linear-gradient(135deg,var(--accent),#b09cff);
-display:grid;
-place-items:center;
-color:white;
-font-weight:900;
-}
-
-.nav{
-display:flex;
-gap:7px;
-}
-
-.nav button{
-border:0;
-background:transparent;
-padding:10px 14px;
-border-radius:10px;
-color:var(--muted);
-}
-
-.nav button:hover,
-.nav button.active{
-background:var(--surface2);
-color:var(--text);
-}
-
-.avatar{
-width:38px;
-height:38px;
-border-radius:50%;
-background:#1c2030;
-color:white;
-display:grid;
-place-items:center;
-font-weight:700;
-}
-
-main{
-max-width:1320px;
-margin:auto;
-padding:34px;
-}
-
-.hero{
-display:flex;
-justify-content:space-between;
-align-items:flex-end;
-gap:30px;
-margin-bottom:28px;
-}
-
-.eyebrow{
-font-size:12px;
-text-transform:uppercase;
-letter-spacing:.12em;
-color:var(--accent);
-font-weight:800;
-}
-
-.hero h1{
-font-size:40px;
-line-height:1.05;
-margin:8px 0;
-}
-
-.hero p{
-color:var(--muted);
-max-width:680px;
-margin:0;
-line-height:1.6;
-}
-
-.primary{
-border:0;
-background:var(--accent);
-color:white;
-padding:12px 17px;
-border-radius:11px;
-font-weight:750;
-box-shadow:0 8px 20px rgba(109,74,255,.22);
-}
-
-.primary:hover{
-background:#5937ef;
-}
-
-.secondary{
-border:1px solid var(--line);
-background:white;
-color:var(--text);
-padding:11px 15px;
-border-radius:11px;
-font-weight:700;
-}
-
-.stats{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:14px;
-margin-bottom:22px;
-}
-
-.stat{
-background:var(--surface);
-border:1px solid var(--line);
-border-radius:15px;
-padding:17px;
-}
-
-.stat b{
-font-size:24px;
-}
-
-.stat span{
-display:block;
-color:var(--muted);
-font-size:12px;
-margin-top:5px;
-}
-
-.layout{
-display:grid;
-grid-template-columns:255px 1fr;
-gap:20px;
-}
-
-.panel{
-background:var(--surface);
-border:1px solid var(--line);
-border-radius:16px;
-box-shadow:var(--shadow);
-}
-
-.filters{
-padding:18px;
-height:max-content;
-position:sticky;
-top:90px;
-}
-
-.filters h3{
-margin:0 0 16px;
-}
-
-.field{
-margin:15px 0;
-}
-
-.field label{
-display:block;
-font-size:12px;
-font-weight:750;
-margin-bottom:7px;
-}
-
-.field input,
-.field select,
-.field textarea{
-width:100%;
-border:1px solid var(--line);
-border-radius:9px;
-padding:10px;
-background:white;
-outline:none;
-}
-
-.field input:focus,
-.field select:focus,
-.field textarea:focus{
-border-color:var(--accent);
-}
-
-.check{
-display:flex;
-gap:8px;
-align-items:center;
-font-size:13px;
-color:var(--muted);
-margin:8px 0;
-}
-
-.resultsHead{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:13px;
-}
-
-.resultsHead h2{
-font-size:18px;
-margin:0;
-}
-
-.creatorGrid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:15px;
-}
-
-.creator{
-padding:16px;
-transition:.2s;
-cursor:pointer;
-}
-
-.creator:hover{
-transform:translateY(-2px);
-box-shadow:0 18px 42px rgba(28,31,52,.12);
-}
-
-.cover{
-height:145px;
-border-radius:12px;
-background:linear-gradient(135deg,#171a2b,#6150c8);
-position:relative;
-overflow:hidden;
-display:flex;
-align-items:flex-end;
-padding:13px;
-color:white;
-}
-
-.cover:before,
-.cover:after{
-content:"";
-position:absolute;
-border-radius:50%;
-filter:blur(1px);
-}
-
-.cover:before{
-width:150px;
-height:150px;
-background:#ff75c3;
-opacity:.45;
-right:-25px;
-top:-45px;
-}
-
-.cover:after{
-width:120px;
-height:120px;
-background:#50e7ff;
-opacity:.32;
-left:-30px;
-bottom:-50px;
-}
-
-.coverText{
-position:relative;
-z-index:1;
-font-weight:800;
-font-size:16px;
-}
-
-.creatorTop{
-display:flex;
-justify-content:space-between;
-gap:12px;
-margin-top:13px;
-}
-
-.person{
-display:flex;
-gap:10px;
-align-items:center;
-}
-
-.mini{
-width:40px;
-height:40px;
-border-radius:12px;
-background:var(--surface2);
-display:grid;
-place-items:center;
-font-weight:800;
-}
-
-.person b{
-display:block;
-}
-
-.person small{
-color:var(--muted);
-}
-
-.verified{
-font-size:11px;
-background:#e9f9f2;
-color:#08764a;
-padding:5px 8px;
-border-radius:20px;
-font-weight:750;
-height:max-content;
-}
-
-.tags{
-display:flex;
-flex-wrap:wrap;
-gap:6px;
-margin:11px 0;
-}
-
-.tag{
-font-size:11px;
-background:var(--surface2);
-padding:5px 7px;
-border-radius:6px;
-color:#555d70;
-}
-
-.meta{
-display:flex;
-justify-content:space-between;
-color:var(--muted);
-font-size:12px;
-border-top:1px solid var(--line);
-padding-top:11px;
-}
-
-.match{
-color:var(--accent);
-font-weight:800;
-}
-
-.empty{
-text-align:center;
-padding:50px;
-color:var(--muted);
-}
-
-.modal{
-position:fixed;
-inset:0;
-background:rgba(11,13,22,.55);
-display:none;
-align-items:center;
-justify-content:center;
-padding:20px;
-z-index:100;
-}
-
-.modal.show{
-display:flex;
-}
-
-.dialog{
-background:white;
-width:min(850px,100%);
-max-height:92vh;
-overflow:auto;
-border-radius:20px;
-padding:25px;
-box-shadow:0 30px 80px rgba(0,0,0,.25);
-}
-
-.dialogHead{
-display:flex;
-justify-content:space-between;
-align-items:flex-start;
-gap:20px;
-}
-
-.close{
-border:0;
-background:var(--surface2);
-border-radius:9px;
-width:36px;
-height:36px;
-font-size:20px;
-}
-
-.detail{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:22px;
-margin-top:20px;
-}
-
-.portfolioBig{
-height:250px;
-border-radius:14px;
-background:linear-gradient(135deg,#16192b,#8a6dff);
-display:grid;
-place-items:center;
-color:white;
-font-size:24px;
-font-weight:850;
-}
-
-.signal{
-display:flex;
-gap:9px;
-align-items:center;
-margin:9px 0;
-font-size:13px;
-}
-
-.dot{
-width:8px;
-height:8px;
-border-radius:50%;
-background:var(--green);
-}
-
-.reviewSection{
-margin-top:28px;
-border-top:1px solid var(--line);
-padding-top:22px;
-}
-
-.review{
-padding:15px;
-border:1px solid var(--line);
-border-radius:13px;
-margin-top:10px;
-background:#fafbfe;
-}
-
-.reviewTop{
-display:flex;
-justify-content:space-between;
-gap:10px;
-}
-
-.reviewName{
-font-weight:800;
-}
-
-.stars{
-color:#f3a900;
-letter-spacing:1px;
-}
-
-.review small{
-color:var(--muted);
-}
-
-.review p{
-margin-bottom:0;
-color:#4e5669;
-line-height:1.5;
-}
-
-.demoReview{
-font-size:11px;
-color:var(--accent);
-background:#eeeaff;
-padding:4px 7px;
-border-radius:5px;
-}
-
-.rolePage{
-min-height:calc(100vh - 72px);
-display:flex;
-align-items:center;
-justify-content:center;
-padding:50px 20px;
-}
-
-.roleBox{
-max-width:900px;
-width:100%;
-text-align:center;
-}
-
-.roleBox h1{
-font-size:42px;
-margin:10px 0;
-}
-
-.roleBox>p{
-color:var(--muted);
-font-size:16px;
-}
-
-.roleCards{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:22px;
-margin-top:35px;
-}
-
-.roleCard{
-background:white;
-border:1px solid var(--line);
-border-radius:20px;
-padding:35px 25px;
-box-shadow:var(--shadow);
-transition:.2s;
-cursor:pointer;
-}
-
-.roleCard:hover{
-transform:translateY(-5px);
-border-color:var(--accent);
-}
-
-.roleIcon{
-font-size:50px;
-}
-
-.roleCard h2{
-margin:15px 0 8px;
-}
-
-.roleCard p{
-color:var(--muted);
-line-height:1.5;
-}
-
-.portfolioPage{
-max-width:1000px;
-margin:auto;
-}
-
-.portfolioHeader{
-margin-bottom:25px;
-}
-
-.portfolioHeader h1{
-font-size:36px;
-margin:8px 0;
-}
-
-.portfolioForm{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:18px;
-}
-
-.portfolioForm .full{
-grid-column:1/-1;
-}
-
-.portfolioForm textarea{
-min-height:120px;
-resize:vertical;
-}
-
-.toolGrid{
-display:flex;
-flex-wrap:wrap;
-gap:8px;
-}
-
-.toolOption{
-border:1px solid var(--line);
-padding:8px 12px;
-border-radius:20px;
-background:white;
-cursor:pointer;
-font-size:13px;
-}
-
-.toolOption.selected{
-background:#eeeaff;
-border-color:var(--accent);
-color:var(--accent);
-font-weight:700;
-}
-
-.successBox{
-display:none;
-background:#e9f9f2;
-border:1px solid #bcead6;
-color:#08764a;
-padding:15px;
-border-radius:12px;
-margin-top:15px;
-}
-
-.briefGrid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:14px;
-}
-
-.aiBox{
-margin:16px 0;
-padding:16px;
-border-radius:12px;
-background:#f2efff;
-border:1px solid #ded6ff;
-}
-
-.toast{
-position:fixed;
-right:22px;
-bottom:22px;
-background:#171a2b;
-color:white;
-padding:13px 17px;
-border-radius:11px;
-display:none;
-z-index:200;
-box-shadow:var(--shadow);
-}
-
+:root{--bg:#f7f8fc;--surface:#fff;--surface2:#f0f2f8;--text:#121522;--muted:#697084;--line:#e3e6ee;--accent:#6d4aff;--accent2:#8b72ff;--green:#18a86b;--shadow:0 14px 40px rgba(28,31,52,.08)}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit}
+.app{min-height:100vh;background:var(--bg)}
+header{height:72px;background:rgba(255,255,255,.92);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px;position:sticky;top:0;z-index:20;backdrop-filter:blur(12px)}
+.logo{display:flex;gap:10px;align-items:center;font-weight:800;font-size:19px}
+.mark{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--accent),#b09cff);display:grid;place-items:center;color:white;font-weight:900}
+.nav{display:flex;gap:8px}
+.nav button{border:0;background:transparent;padding:10px 14px;border-radius:10px;color:var(--muted);cursor:pointer}
+.nav button.active,.nav button:hover{background:var(--surface2);color:var(--text)}
+.avatar{width:38px;height:38px;border-radius:50%;background:#1c2030;color:white;display:grid;place-items:center;font-weight:700}
+main{max-width:1280px;margin:auto;padding:34px}
+.hero{display:flex;justify-content:space-between;gap:30px;align-items:flex-end;margin-bottom:28px}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);font-weight:800}
+.hero h1{font-size:40px;line-height:1.05;margin:8px 0}
+.hero p{color:var(--muted);max-width:650px;margin:0}
+.primary{border:0;background:var(--accent);color:white;padding:12px 17px;border-radius:11px;font-weight:750;cursor:pointer;box-shadow:0 8px 20px rgba(109,74,255,.22)}
+.secondary{border:1px solid var(--line);background:white;color:var(--text);padding:11px 15px;border-radius:11px;font-weight:700;cursor:pointer}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:17px}
+.stat b{font-size:24px}
+.stat span{display:block;color:var(--muted);font-size:12px;margin-top:5px}
+.layout{display:grid;grid-template-columns:250px 1fr;gap:20px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.filters{padding:18px;height:max-content;position:sticky;top:90px}
+.filters h3{margin:0 0 16px}
+.field{margin:15px 0}
+.field label{display:block;font-size:12px;font-weight:750;margin-bottom:7px}
+.field input,.field select{width:100%;border:1px solid var(--line);border-radius:9px;padding:9px;background:white}
+.check{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--muted);margin:8px 0}
+.resultsHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}
+.resultsHead h2{font-size:18px;margin:0}
+.creatorGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+.creator{padding:16px;transition:.2s;cursor:pointer}
+.creator:hover{transform:translateY(-2px);box-shadow:0 18px 42px rgba(28,31,52,.12)}
+.cover{height:145px;border-radius:12px;background:linear-gradient(135deg,#171a2b,#6150c8);position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:13px;color:white}
+.cover:before,.cover:after{content:"";position:absolute;border-radius:50%;filter:blur(1px)}
+.cover:before{width:150px;height:150px;background:#ff75c3;opacity:.45;right:-25px;top:-45px}
+.cover:after{width:120px;height:120px;background:#50e7ff;opacity:.32;left:-30px;bottom:-50px}
+.coverText{position:relative;z-index:1;font-weight:800;font-size:16px}
+.creatorTop{display:flex;justify-content:space-between;gap:12px;margin-top:13px}
+.person{display:flex;gap:10px;align-items:center}
+.mini{width:40px;height:40px;border-radius:12px;background:var(--surface2);display:grid;place-items:center;font-weight:800}
+.person b{display:block}
+.person small{color:var(--muted)}
+.verified{font-size:11px;background:#e9f9f2;color:#08764a;padding:5px 8px;border-radius:20px;font-weight:750;height:max-content}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:11px 0}
+.tag{font-size:11px;background:var(--surface2);padding:5px 7px;border-radius:6px;color:#555d70}
+.meta{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;border-top:1px solid var(--line);padding-top:11px}
+.match{color:var(--accent);font-weight:800}
+.empty{display:none;text-align:center;padding:50px;color:var(--muted)}
+.modal{position:fixed;inset:0;background:rgba(11,13,22,.5);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+.modal.show{display:flex}
+.dialog{background:white;width:min(720px,100%);max-height:90vh;overflow:auto;border-radius:20px;padding:24px;box-shadow:0 30px 80px rgba(0,0,0,.25)}
+.dialogHead{display:flex;justify-content:space-between}
+.close{border:0;background:var(--surface2);border-radius:9px;width:36px;height:36px;cursor:pointer}
+.briefGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dialog textarea{width:100%;min-height:100px;border:1px solid var(--line);border-radius:10px;padding:10px;resize:vertical}
+.dialog .wide{grid-column:1/-1}
+.aiBox{margin:16px 0;padding:14px;border-radius:12px;background:#f2efff;border:1px solid #ded6ff}
+.aiBox b{color:var(--accent)}
+.detail{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.portfolioBig{height:250px;border-radius:14px;background:linear-gradient(135deg,#16192b,#8a6dff);display:grid;place-items:center;color:white;font-size:24px;font-weight:850}
+.detail h2{margin:0}
+.detail p{color:var(--muted);line-height:1.6}
+.signal{display:flex;gap:9px;align-items:center;margin:9px 0;font-size:13px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
 @media(max-width:900px){
-
-header{
-padding:0 15px;
+header{padding:0 15px}
+.nav{display:none}
+main{padding:22px 15px}
+.hero{align-items:flex-start;flex-direction:column}
+.stats{grid-template-columns:1fr 1fr}
+.layout{grid-template-columns:1fr}
+.filters{position:static}
+.creatorGrid{grid-template-columns:1fr}
+.detail{grid-template-columns:1fr}
 }
-
-.nav{
-display:none;
-}
-
-main{
-padding:22px 15px;
-}
-
-.hero{
-align-items:flex-start;
-flex-direction:column;
-}
-
-.stats{
-grid-template-columns:1fr 1fr;
-}
-
-.layout{
-grid-template-columns:1fr;
-}
-
-.filters{
-position:static;
-}
-
-.creatorGrid{
-grid-template-columns:1fr;
-}
-
-.detail,
-.roleCards,
-.portfolioForm,
-.briefGrid{
-grid-template-columns:1fr;
-}
-
-.portfolioForm .full{
-grid-column:auto;
-}
-
-.roleBox h1{
-font-size:32px;
-}
-
-}
-
 </style>
 </head>
 
 <body>
+<div class="app">
 
-<div id="app"></div>
+<header>
+<div class="logo">
+<div class="mark">F</div>
+FLIXHIRE
+<span style="font-size:11px;color:var(--muted);font-weight:600">AI CREATOR MARKETPLACE</span>
+</div>
+
+<div class="nav">
+<button class="active" onclick="showView('discover',this)">Discover</button>
+<button onclick="showView('briefs',this)">My Briefs</button>
+<button onclick="showView('shortlist',this)">Shortlist <span id="shortCount">0</span></button>
+</div>
+
+<div class="avatar">SM</div>
+</header>
+
+<main>
+
+<section class="hero">
+<div>
+<div class="eyebrow">AI-native hiring, built for creative teams</div>
+<h1>Find the creator behind the next big idea.</h1>
+<p>Discover AI filmmakers, animators and generative designers through real work, verified workflows and tool-level skills.</p>
+</div>
+
+<button class="primary" onclick="openBrief()">+ Create AI Brief</button>
+</section>
+
+<div class="stats">
+<div class="stat"><b>1,248</b><span>AI creators indexed</span></div>
+<div class="stat"><b>94%</b><span>profile verification coverage</span></div>
+<div class="stat"><b>4.8/5</b><span>average creator rating</span></div>
+<div class="stat"><b>10×</b><span>faster discovery</span></div>
+</div>
+
+<div class="layout">
+
+<aside class="panel filters">
+<h3>Discover creators</h3>
+
+<div class="field">
+<label>Search</label>
+<input id="search" placeholder="e.g. Midjourney, fashion" oninput="filterCreators()">
+</div>
+
+<div class="field">
+<label>Specialization</label>
+<select id="spec" onchange="filterCreators()">
+<option value="">All specializations</option>
+<option>AI Filmmaking</option>
+<option>AI Animation</option>
+<option>Generative Design</option>
+<option>Product Ads</option>
+</select>
+</div>
+
+<div class="field">
+<label>Tools / Models</label>
+<select id="tool" onchange="filterCreators()">
+<option value="">All tools</option>
+<option>Midjourney</option>
+<option>Runway</option>
+<option>Adobe Firefly</option>
+<option>Stable Diffusion</option>
+<option>Kling</option>
+</select>
+</div>
+
+<div class="field">
+<label>Content format</label>
+
+<label class="check">
+<input type="checkbox" value="Video" onchange="filterCreators()"> Video
+</label>
+
+<label class="check">
+<input type="checkbox" value="Image" onchange="filterCreators()"> Image
+</label>
+
+<label class="check">
+<input type="checkbox" value="3D" onchange="filterCreators()"> 3D / Animation
+</label>
+</div>
+
+<button class="secondary" style="width:100%" onclick="resetFilters()">Reset filters</button>
+</aside>
+
+<section>
+
+<div class="resultsHead">
+<h2><span id="resultCount">6</span> creators matched</h2>
+
+<select class="secondary" style="padding:8px" onchange="sortCreators(this.value)">
+<option value="match">Best match</option>
+<option value="rating">Top rated</option>
+<option value="rate">Lowest rate</option>
+</select>
+</div>
+
+<div class="creatorGrid" id="grid"></div>
+
+<div class="empty panel" id="empty">
+No creators match these filters.
+<br>
+<button class="secondary" style="margin-top:12px" onclick="resetFilters()">Clear filters</button>
+</div>
+
+</section>
+</div>
+</main>
 
 <div class="modal" id="modal">
 <div class="dialog" id="dialog"></div>
 </div>
 
-<div class="toast" id="toast"></div>
+</div>
 
 <script>
 
-/* =========================================================
-   FLIXHIRE — FRONTEND ONLY
-   No backend required
-========================================================= */
-
-
-/* =========================================================
-   CREATOR DATA — 30 DEMO CREATORS
-========================================================= */
+/* =========================================
+   FLIXHIRE FRONTEND-ONLY DEMO DATA
+   No backend or localhost required
+========================================= */
 
 const creators = [
 
 {
 id:1,
-name:"Aanya Rao",
-role:"AI Filmmaker",
-spec:"AI Filmmaking",
-tools:["Runway Gen-3","Kling"],
-formats:["Video"],
+name:'Aanya Rao',
+role:'AI Filmmaker',
+spec:'AI Filmmaking',
+tools:['Runway','Kling'],
+formats:['Video'],
 rating:4.9,
 rate:120,
 match:98,
 verified:true,
-desc:"Cinematic brand films and product narratives with strong storytelling and controlled motion workflows.",
-reviews:[
-["Neha Kapoor","Marketing Director","★★★★★","Aanya delivered a beautiful campaign film with very few revisions."],
-["Rahul Mehta","Brand Manager","★★★★★","Excellent visual storytelling and communication."]
-]
+desc:'Cinematic brand films and product narratives. Strong in storyboarding, image-to-video and controlled motion workflows.'
 },
 
 {
 id:2,
-name:"Vikram Shah",
-role:"Generative Designer",
-spec:"Generative Design",
-tools:["Midjourney","Adobe Firefly"],
-formats:["Image"],
+name:'Vikram Shah',
+role:'Generative Designer',
+spec:'Generative Design',
+tools:['Midjourney','Adobe Firefly'],
+formats:['Image'],
 rating:4.8,
 rate:85,
 match:94,
 verified:true,
-desc:"Campaign key visuals, fashion concepts and social creative systems.",
-reviews:[
-["Priya Nair","Creative Lead","★★★★★","The visual direction was exactly what our campaign needed."],
-["Arun Kumar","Founder","★★★★☆","Fast delivery and strong concepts."]
-]
+desc:'Campaign key visuals, fashion concepts and high-volume social creative with consistent visual systems.'
 },
 
 {
 id:3,
-name:"Maya Chen",
-role:"AI Animator",
-spec:"AI Animation",
-tools:["Runway Gen-3","Stable Diffusion","ComfyUI"],
-formats:["3D","Video"],
+name:'Maya Chen',
+role:'AI Animator',
+spec:'AI Animation',
+tools:['Runway','Stable Diffusion','ComfyUI'],
+formats:['3D','Video'],
 rating:4.9,
 rate:140,
 match:92,
 verified:true,
-desc:"Stylized animation, character concepts and motion design.",
-reviews:[
-["Sarah Wilson","Producer","★★★★★","Maya created an incredible animation sequence."],
-["Daniel Lee","Creative Director","★★★★★","Very professional and technically strong."]
-]
+desc:'Stylized animation, character concepts and motion design with production-ready handoff workflows.'
 },
 
 {
 id:4,
-name:"Arjun Menon",
-role:"Product Ads Creator",
-spec:"Product Ads",
-tools:["Kling","Midjourney"],
-formats:["Video","Image"],
+name:'Arjun Menon',
+role:'Product Ads Creator',
+spec:'Product Ads',
+tools:['Kling','Midjourney'],
+formats:['Video','Image'],
 rating:4.7,
 rate:70,
 match:89,
 verified:false,
-desc:"Performance-focused product advertisements for social platforms.",
-reviews:[
-["Karthik Raj","Growth Manager","★★★★☆","Great understanding of short-form advertising."],
-["Divya S","Founder","★★★★★","Delivered the product visuals quickly."]
-]
+desc:'Performance-focused product ads for D2C brands, optimized for short-form social platforms.'
 },
 
 {
 id:5,
-name:"Zoya Khan",
-role:"AI Art Director",
-spec:"Generative Design",
-tools:["Midjourney","Stable Diffusion","FLUX"],
-formats:["Image","3D"],
+name:'Zoya Khan',
+role:'AI Art Director',
+spec:'Generative Design',
+tools:['Midjourney','Stable Diffusion','FLUX'],
+formats:['Image','3D'],
 rating:4.9,
 rate:110,
 match:91,
 verified:true,
-desc:"Art direction, visual identity and concept development for premium brands.",
-reviews:[
-["Meera Joshi","Brand Director","★★★★★","Fantastic art direction and attention to detail."],
-["Omar Ali","Creative Producer","★★★★★","One of the strongest visual designers we have worked with."]
-]
+desc:'Art direction, visual identity and concept development for premium lifestyle and technology brands.'
 },
 
 {
 id:6,
-name:"Rohan Iyer",
-role:"AI Video Specialist",
-spec:"AI Filmmaking",
-tools:["Runway Gen-3","Kling","ComfyUI"],
-formats:["Video"],
+name:'Rohan Iyer',
+role:'AI Video Specialist',
+spec:'AI Filmmaking',
+tools:['Runway','Kling','ComfyUI'],
+formats:['Video'],
 rating:4.6,
 rate:65,
 match:87,
 verified:true,
-desc:"Fast-turnaround social advertisements and product explainers.",
-reviews:[
-["Ananya Das","Social Media Lead","★★★★☆","Very fast and creative."],
-["Vivek Rao","Marketing Manager","★★★★★","Great value for short-form campaigns."]
-]
-},
+desc:'Fast-turnaround UGC-style ads, motion graphics and product explainers for growth teams.'
+}
 
-{
-id:7,
-name:"Ishita Verma",
-role:"AI Fashion Creator",
-spec:"AI Fashion",
-tools:["Midjourney","Flux","Adobe Firefly"],
-formats:["Image","Video"],
-rating:4.8,
-rate:95,
-match:93,
-verified:true,
-desc:"AI fashion campaigns, editorial imagery and virtual styling.",
-reviews:[
-["Riya Shah","Fashion Manager","★★★★★","Beautiful editorial quality."],
-["Tanya Kapoor","Creative Lead","★★★★★","Exactly matched our fashion direction."]
-]
-},
+];
 
-{
-id:8,
-name:"Aditya Krishnan",
-role:"3D AI Artist",
-spec:"3D & Product Visualization",
-tools:["Blender","ComfyUI","Stable Diffusion"],
-formats:["3D","Image"],
-rating:4.7,
-rate:100,
-match:90,
-verified:true,
-desc:"3D product renders and AI-assisted visualization.",
-reviews:[
-["Manoj S","Product Lead","★★★★★","Excellent product renders."],
-["Nitin Kumar","Founder","★★★★☆","Very good technical execution."]
-]
-},
+let shortlist = new Set(
+JSON.parse(localStorage.getItem('flixhireShortlist') || '[]')
+);
 
-{
-id:9,
-name:"Sara Thomas",
-role:"AI Character Designer",
-spec:"Character Design",
-tools:["Midjourney","Stable Diffusion","Leonardo AI"],
-formats:["Image","3D"],
-rating:4.9,
-rate:105,
-match:95,
-verified:true,
-desc:"Character development, concept art and visual storytelling.",
-reviews:[
-["Asha Roy","Animation Producer","★★★★★","Amazing character concepts."],
-["George Mathew","Director","★★★★★","Creative and highly collaborative."]
-]
-},
+function saveShortlist(){
+localStorage.setItem(
+'flixhireShortlist',
+JSON.stringify([...shortlist])
+);
 
-{
-id:10,
-name:"Kavin Raj",
-role:"AI Video Editor",
-spec:"AI Video Editing",
-tools:["Runway","CapCut AI","Adobe Premiere AI"],
-formats:["Video"],
-rating:4.6,
-rate:60,
-match:86,
-verified:false,
-desc:"AI-assisted editing, reels, commercials and social video.",
-reviews:[
-["Sanjay P","Marketing Lead","★★★★☆","Quick turnaround."],
-["Keerthi M","Social Manager","★★★★★","Excellent reels."]
-]
-},
+document.getElementById('shortCount').textContent = shortlist.size;
+}
 
-{
-id:11,
-name:"Nisha Patel",
-role:"AI Product Photographer",
-spec:"AI Product Photography",
-tools:["Adobe Firefly","Midjourney","Photoshop AI"],
-formats:["Image"],
-rating:4.8,
-rate:90,
-match:94,
-verified:true,
-desc:"Commercial product imagery without traditional studio production.",
-reviews:[
-["Ramesh Shah","E-commerce Manager","★★★★★","Our product pages look much better."],
-["Pooja Mehta","Brand Manager","★★★★★","Very polished work."]
-]
-},
+function render(list = creators){
 
-{
-id:12,
-name:"Dev Malhotra",
-role:"AI Storyboard Artist",
-spec:"Storyboarding",
-tools:["Midjourney","ChatGPT","Runway"],
-formats:["Image","Video"],
-rating:4.7,
-rate:80,
-match:88,
-verified:true,
-desc:"AI-assisted storyboards and previsualization for film and advertising.",
-reviews:[
-["Vishal Rao","Director","★★★★★","Saved us significant pre-production time."],
-["Anjali S","Producer","★★★★☆","Very useful visual planning."]
-]
-},
+const grid = document.getElementById('grid');
 
-{
-id:13,
-name:"Meera Srinivasan",
-role:"AI Social Content Creator",
-spec:"Social Media Content",
-tools:["Canva AI","Adobe Firefly","CapCut AI"],
-formats:["Image","Video"],
-rating:4.8,
-rate:55,
-match:90,
-verified:true,
-desc:"High-volume social media creative for modern brands.",
-reviews:[
-["Lakshmi R","Social Lead","★★★★★","Consistent content every week."],
-["Arunima P","Marketing Manager","★★★★★","Very easy to work with."]
-]
-},
+grid.innerHTML = list.map(c => `
 
-{
-id:14,
-name:"Kabir Singh",
-role:"AI Motion Designer",
-spec:"Motion Graphics",
-tools:["Runway","Adobe After Effects","Pika"],
-formats:["Video","3D"],
-rating:4.8,
-rate:115,
-match:91,
-verified:true,
-desc:"Motion graphics, title sequences and branded animation.",
-reviews:[
-["Rahul S","Creative Director","★★★★★","Fantastic motion design."],
-["Isha Kapoor","Producer","★★★★☆","Great technical skills."]
-]
-},
+<article class="panel creator" onclick="openProfile(${c.id})">
 
-{
-id:15,
-name:"Anika Bose",
-role:"AI Concept Artist",
-spec:"Concept Art",
-tools:["Midjourney","Flux","Leonardo AI"],
-formats:["Image"],
-rating:4.9,
-rate:100,
-match:96,
-verified:true,
-desc:"Concept development for films, games and brand campaigns.",
-reviews:[
-["Siddharth N","Creative Director","★★★★★","Outstanding imagination."],
-["Maya R","Producer","★★★★★","Excellent concept exploration."]
-]
-},
+<div class="cover">
 
-{
-id:16,
-name:"Rahul Nair",
-role:"AI Music Visualizer",
-spec:"Music Visuals",
-tools:["Runway","Pika","Stable Diffusion"],
-formats:["Video"],
-rating:4.6,
-rate:75,
-match:84,
-verified:false,
-desc:"AI-generated music videos, visualizers and concert visuals.",
-reviews:[
-["Aman K","Artist Manager","★★★★☆","Creative music visuals."],
-["Rohit P","Producer","★★★★★","Very unique concepts."]
-]
-},
+<div class="coverText">
+${c.role}
+<br>
+<span style="font-size:12px;font-weight:500;opacity:.8">
+AI-native portfolio
+</span>
+</div>
 
-{
-id:17,
-name:"Tara Joseph",
-role:"AI Children's Content Creator",
-spec:"Children's Content",
-tools:["Midjourney","Runway","ElevenLabs"],
-formats:["Image","Video","Audio"],
-rating:4.8,
-rate:85,
-match:89,
-verified:true,
-desc:"Educational and entertaining AI content for children.",
-reviews:[
-["Divya Menon","Education Lead","★★★★★","Lovely storytelling."],
-["Joseph K","Publisher","★★★★★","Children responded very well."]
-]
-},
+</div>
 
-{
-id:18,
-name:"Vishnu Kumar",
-role:"AI Commercial Director",
-spec:"Commercial Production",
-tools:["Runway Gen-3","Kling","Veo"],
-formats:["Video"],
-rating:4.9,
-rate:150,
-match:97,
-verified:true,
-desc:"High-end commercial concepts and cinematic AI production.",
-reviews:[
-["Amit Shah","Agency Director","★★★★★","Exceptional commercial quality."],
-["Rhea Kapoor","Brand Director","★★★★★","Looked like a major production."]
-]
-},
+<div class="creatorTop">
 
-{
-id:19,
-name:"Pavithra S",
-role:"AI Illustration Artist",
-spec:"Digital Illustration",
-tools:["Adobe Firefly","Midjourney","DALL-E"],
-formats:["Image"],
-rating:4.7,
-rate:65,
-match:88,
-verified:true,
-desc:"Editorial illustration, books and marketing artwork.",
-reviews:[
-["Nandini R","Editor","★★★★★","Beautiful illustrations."],
-["Hari S","Publisher","★★★★☆","Very creative."]
-]
-},
+<div class="person">
 
-{
-id:20,
-name:"Aryan Gupta",
-role:"AI UGC Creator",
-spec:"AI UGC & Influencer Content",
-tools:["HeyGen","Synthesia","Runway"],
-formats:["Video"],
-rating:4.7,
-rate:60,
-match:92,
-verified:true,
-desc:"AI avatar and UGC-style videos for performance marketing.",
-reviews:[
-["Ravi K","Performance Lead","★★★★★","Our ad testing became much faster."],
-["Sneha P","Growth Manager","★★★★☆","Good variety of concepts."]
-]
-},
+<div class="mini">
+${c.name.split(' ').map(x => x[0]).join('')}
+</div>
 
-{
-id:21,
-name:"Lavanya Iyer",
-role:"AI Beauty Creator",
-spec:"Beauty & Cosmetics",
-tools:["Midjourney","Flux","Adobe Firefly"],
-formats:["Image","Video"],
-rating:4.9,
-rate:105,
-match:94,
-verified:true,
-desc:"Beauty campaigns, cosmetics visuals and premium product imagery.",
-reviews:[
-["Nikita R","Beauty Brand Lead","★★★★★","Beautiful premium visuals."],
-["Sonal M","Marketing Director","★★★★★","Very strong aesthetic sense."]
-]
-},
+<div>
+<b>${c.name}</b>
+<small>${c.role}</small>
+</div>
 
-{
-id:22,
-name:"Harish Kumar",
-role:"AI Architecture Visualizer",
-spec:"Architecture Visualization",
-tools:["Stable Diffusion","ComfyUI","Blender"],
-formats:["3D","Image"],
-rating:4.8,
-rate:125,
-match:86,
-verified:true,
-desc:"Architectural concepts, interiors and real-estate visualization.",
-reviews:[
-["Vijay A","Architect","★★★★★","Excellent architectural concepts."],
-["Mohan R","Developer","★★★★★","Helped us visualize the project."]
-]
-},
+</div>
 
-{
-id:23,
-name:"Sahana Rao",
-role:"AI Travel Creator",
-spec:"Travel Content",
-tools:["Runway","Midjourney","Kling"],
-formats:["Image","Video"],
-rating:4.7,
-rate:80,
-match:89,
-verified:true,
-desc:"Destination campaigns and immersive travel storytelling.",
-reviews:[
-["Aarav S","Travel Manager","★★★★★","Beautiful destination storytelling."],
-["Ritu K","Marketing Lead","★★★★☆","Very engaging videos."]
-]
-},
+${c.verified
+? '<span class="verified">✓ Verified</span>'
+: ''}
 
-{
-id:24,
-name:"Manish Verma",
-role:"AI Game Artist",
-spec:"Game Art",
-tools:["Midjourney","Stable Diffusion","ComfyUI"],
-formats:["Image","3D"],
-rating:4.9,
-rate:130,
-match:90,
-verified:true,
-desc:"Game characters, environments, props and concept art.",
-reviews:[
-["Arjun G","Game Producer","★★★★★","Great understanding of game art."],
-["Kevin M","Studio Lead","★★★★★","Excellent concepts."]
-]
-},
+</div>
 
-{
-id:25,
-name:"Diya Kapoor",
-role:"AI Presentation Designer",
-spec:"Presentation Design",
-tools:["Canva AI","Gamma","Adobe Firefly"],
-formats:["I
+<div class="tags">
+
+${c.tools.map(x => `<span class="tag">${x}</span>`).join('')}
+
+${c.formats.map(x => `<span class="tag">${x}</span>`).join('')}
+
+</div>
+
+<div class="meta">
+
+<span>
+★ ${c.rating} · $${c.rate}/hr
+</span>
+
+<span class="match">
+${c.match}% match
+</span>
+
+</div>
+
+</article>
+
+`).join('');
+
+document.getElementById('resultCount').textContent = list.length;
+
+document.getElementById('empty').style.display =
+list.length ? 'none' : 'block';
+
+}
+
+function filterCreators(){
+
+const q =
+document.getElementById('search').value.toLowerCase();
+
+const s =
+document.getElementById('spec').value;
+
+const t =
+document.getElementById('tool').value;
+
+const formats =
+[
+...document.querySelectorAll(
+'.filters input[type=checkbox]:checked'
+)
+].map(x => x.value);
+
+const filtered = creators.filter(c =>
+
+(!q ||
+(c.name +
+c.role +
+c.tools.join(' ') +
+c.spec +
+c.desc)
+.toLowerCase()
+.includes(q))
+
+&&
+
+(!s || c.spec === s)
+
+&&
+
+(!t || c.tools.includes(t))
+
+&&
+
+(!formats.length ||
+formats.some(f => c.formats.includes(f)))
+
+);
+
+render(filtered);
+
+}
+
+function resetFilters(){
+
+document.getElementById('search').value = '';
+
+document.getElementById('spec').value = '';
+
+document.getElementById('tool').value = '';
+
+document
+.querySelectorAll('.filters input[type=checkbox]')
+.forEach(x => x.checked = false);
+
+render(creators);
+
+}
+
+function sortCreators(v){
+
+let x = [...creators];
+
+if(v === 'rating'){
+x.sort((a,b) => b.rating - a.rating);
+}
+
+if(v === 'rate'){
+x.sort((a,b) => a.rate - b.rate);
+}
+
+if(v === 'match'){
+x.sort((a,b) => b.match - a.match);
+}
+
+render(x);
+
+}
+
+function openBrief(){
+
+document.getElementById('dialog').innerHTML = `
+
+<div class="dialogHead">
+
+<div>
+
+<div class="eyebrow">
+AI-assisted brief builder
+</div>
+
+<h2 style="margin:5px 0">
+Turn an idea into a creator-ready brief
+</h2>
+
+</div>
+
+<button class="close" onclick="closeModal()">×</button>
+
+</div>
+
+<p style="color:var(--muted)">
+Describe your campaign naturally. FLIXHIRE structures the requirements so creators can respond with fewer revisions.
+</p>
+
+<div class="field">
+
+<label>Rough idea</label>
+
+<textarea
+id="idea"
+placeholder="We need a 20-second premium skincare ad for Instagram. Soft morning light, elegant, modern, with a woman applying serum..."
+></textarea>
+
+</div>
+
+<button class="primary" onclick="generateBrief()">
+✦ Generate structured brief
+</button>
+
+<div id="generated"></div>
+
+`;
+
+openModal();
+
+}
+
+function generateBrief(){
+
+const idea =
+document.getElementById('idea').value ||
+'A premium skincare campaign for social media.';
+
+document.getElementById('generated').innerHTML = `
+
+<div class="aiBox">
+
+<b>✦ AI-generated brief</b>
+
+<p style="margin:8px 0;color:#343047">
+
+<strong>Campaign:</strong>
+Premium skincare social campaign
+
+<br>
+
+<strong>Content:</strong>
+20-second hero video + 3 social cutdowns
+
+<br>
+
+<strong>Style:</strong>
+Clean, premium, soft morning light, modern beauty
+
+<br>
+
+<strong>Format:</strong>
+9:16 vertical, 1080×1920
+
+<br>
+
+<strong>Commercial use:</strong>
+Paid social + brand website, worldwide, 12 months
+
+<br>
+
+<strong>Preferred workflow:</strong>
+Runway/Kling + image generation, editable project handoff
+
+<br>
+
+<strong>Reference:</strong>
+${idea}
+
+</p>
+
+</div>
+
+<div style="display:flex;gap:10px;justify-content:flex-end">
+
+<button class="secondary" onclick="closeModal()">
+Save draft
+</button>
+
+<button
+class="primary"
+onclick="closeModal();alert('Brief published! 18 matching creators notified.')"
+>
+Publish brief
+</button>
+
+</div>
+
+`;
+
+}
+
+function openProfile(id){
+
+const c = creators.find(x => x.id === id);
+
+document.getElementById('dialog').innerHTML = `
+
+<div class="dialogHead">
+
+<div class="person">
+
+<div class="mini">
+${c.name.split(' ').map(x => x[0]).join('')}
+</div>
+
+<div>
+
+<h2>${c.name}</h2>
+
+<span style="color:var(--muted)">
+${c.role} · ${c.spec}
+</span>
+
+</div>
+
+</div>
+
+<button class="close" onclick="closeModal()">×</button>
+
+</div>
+
+<div class="detail" style="margin-top:18px">
+
+<div>
+
+<div class="portfolioBig">
+PORTFOLIO REEL
+</div>
+
+<div class="tags">
+
+${c.tools.map(x =>
+`<span class="tag">${x}</span>`
+).join('')}
+
+</div>
+
+</div>
+
+<div>
+
+<p>${c.desc}</p>
+
+<h4>Verification signals</h4>
+
+<div class="signal">
+<span class="dot"></span>
+${c.verified
+? 'Tool usage verified'
+: 'Tool usage self-declared'}
+</div>
+
+<div class="signal">
+<span class="dot"></span>
+Portfolio ownership confirmed
+</div>
+
+<div class="signal">
+<span class="dot"></span>
+Commercial-use workflow documented
+</div>
+
+<h4>Match score</h4>
+
+<div style="font-size:30px;font-weight:850;color:var(--accent)">
+${c.match}%
+</div>
+
+<div style="color:var(--muted);font-size:12px">
+Based on tools, specialization, format and brief requirements.
+</div>
+
+</div>
+
+</div>
+
+<div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px">
+
+<button
+class="secondary"
+onclick="toggleShort(${c.id})"
+>
+${shortlist.has(c.id)
+? '✓ Shortlisted'
+: '＋ Shortlist'}
+</button>
+
+<button
+class="primary"
+onclick="closeModal();alert('Engagement request sent to ${c.name}.')"
+>
+Invite to project
+</button>
+
+</div>
+
+`;
+
+openModal();
+
+}
+
+function toggleShort(id){
+
+if(shortlist.has(id)){
+shortlist.delete(id);
+}else{
+shortlist.add(id);
+}
+
+saveShortlist();
+
+openProfile(id);
+
+}
+
+function showView(view,btn){
+
+document
+.querySelectorAll('.nav button')
+.forEach(x => x.classList.remove('active'));
+
+btn.classList.add('active');
+
+if(view === 'briefs'){
+
+openBrief();
+
+}else if(view === 'shortlist'){
+
+const list =
+creators.filter(c => shortlist.has(c.id));
+
+render(list);
+
+}else{
+
+render(creators);
+
+}
+
+}
+
+function openModal(){
+
+document
+.getElementById('modal')
+.classList.add('show');
+
+}
+
+function closeModal(){
+
+document
+.getElementById('modal')
+.classList.remove('show');
+
+}
+
+document
+.getElementById('modal')
+.addEventListener('click', e => {
+
+if(e.target.id === 'modal'){
+closeModal();
+}
+
+});
+
+saveShortlist();
+
+render();
+
+</script>
+
+</body>
+</html>
